@@ -1,13 +1,14 @@
 import { MemoryRouter as Router, Routes, Route } from 'react-router-dom';
-import icon from '../../assets/icon.svg';
+import Dropzone from './Dropzone';
 import './App.css';
+import Header from './components/Header/Header';
+import Footer from './components/Footer';
 
 const Hello = () => {
   return (
     <div>
-      <div className="Hello">
-        <img width="200px" alt="icon" src={icon} />
-      </div>
+      <Header />
+      <Dropzone />
       <h1>electron-react-boilerplate</h1>
       <div className="Hello">
         <a
@@ -35,6 +36,7 @@ const Hello = () => {
           </button>
         </a>
       </div>
+      <Footer />
     </div>
   );
 };
