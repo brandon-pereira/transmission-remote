@@ -1,6 +1,9 @@
 import { contextBridge, ipcRenderer, IpcRendererEvent } from 'electron';
 
-export type Channels = 'ipc-example' | 'open-file-picker';
+export type Channels =
+  | 'ipc-example'
+  | 'transmission-get-files'
+  | 'open-file-picker';
 
 contextBridge.exposeInMainWorld('electron', {
   ipcRenderer: {
@@ -16,6 +19,14 @@ contextBridge.exposeInMainWorld('electron', {
     },
     once(channel: Channels, func: (...args: unknown[]) => void) {
       ipcRenderer.once(channel, (_event, ...args) => func(...args));
+    },
+  },
+  store: {
+    get(val: string) {
+      return ipcRenderer.sendSync('electron-store-get', val);
+    },
+    set(property: string, val: unknown) {
+      ipcRenderer.send('electron-store-set', property, val);
     },
   },
 });

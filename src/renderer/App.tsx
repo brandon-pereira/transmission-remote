@@ -5,9 +5,10 @@ import styles from './App.module.scss';
 import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
 import Torrents from './components/TorrentsList/TorrentsList';
+import './utils/storage';
 
 setInterval(() => {
-  window.electron.ipcRenderer.sendMessage('get-active');
+  window.electron.ipcRenderer.sendMessage('transmission-get-files');
 }, 1000);
 
 const Hello = () => {
