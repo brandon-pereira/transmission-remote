@@ -35,6 +35,11 @@
     "appId": "org.erb.ElectronReact",
     "asar": true,
     "asarUnpack": "**\\*.{node,dll}",
+    "fileAssociations": [
+      {
+        "ext": "torrent"
+      }
+    ],
     "files": [
       "dist",
       "node_modules",
@@ -235,7 +240,8 @@
     "history": "^5.3.0",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
-    "react-router-dom": "^6.3.0"
+    "react-router-dom": "^6.3.0",
+    "transmission-promise": "^1.1.5"
   },
   "devEngines": {
     "node": ">=14.x",

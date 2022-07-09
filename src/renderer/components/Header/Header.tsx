@@ -9,6 +9,9 @@ function Header() {
           type="button"
           aria-label="Add Torrent"
           className={styles.button}
+          onClick={() => {
+            window.electron.ipcRenderer.sendMessage('open-file-picker');
+          }}
         >
           Add
         </button>

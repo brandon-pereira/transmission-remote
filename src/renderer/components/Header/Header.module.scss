@@ -1,8 +1,9 @@
 .container {
-  background: linear-gradient(#fdfdfd, #dbdbdb);
   -webkit-app-region: drag;
   padding: 35px 10px 10px;
   position: relative;
+  background: var(--colors-app-shell-background);
+  color: var(--colors-app-shell-color);
 }
 
 .title {
@@ -11,7 +12,6 @@
   text-align: center;
   left: 70px;
   right: 10px;
-  color: #bfc0c3;
   margin: 0;
   font-size: 16px;
   font-weight: 400;
@@ -27,11 +27,4 @@
   color: currentColor;
   padding: 6px 14px;
   border-radius: 5px;
-}
-
-@media (prefers-color-scheme: dark) {
-  .container {
-    background: linear-gradient(#45464a, #343538);
-    color: #fff;
-  }
 }

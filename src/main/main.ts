@@ -14,6 +14,7 @@ import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
 import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
+import './transmission';
 
 export default class AppUpdater {
   constructor() {
@@ -73,6 +74,7 @@ const createWindow = async () => {
     show: false,
     width: 1024,
     height: 728,
+    titleBarStyle: 'hiddenInset',
     icon: getAssetPath('icon.png'),
     webPreferences: {
       preload: app.isPackaged
@@ -96,6 +98,15 @@ const createWindow = async () => {
 
   mainWindow.on('closed', () => {
     mainWindow = null;
+  });
+
+  ipcMain.on('ondragstart', (event, filePath) => {
+    console.log();
+    event.sender.startDrag({
+      file: filePath,
+      icon: filePath,
+      // icon: '/path/to/icon.jpg',
+    });
   });
 
   const menuBuilder = new MenuBuilder(mainWindow);
@@ -128,6 +139,10 @@ app
   .whenReady()
   .then(() => {
     createWindow();
+    app.on('open-file', (e) => {
+      console.log('OPEN', e);
+    });
+
     app.on('activate', () => {
       // On macOS it's common to re-create a window in the app when the
       // dock icon is clicked and there are no other windows open.

@@ -1,0 +1,12 @@
+.container {
+  overflow: hidden;
+  padding: 1rem;
+  border-bottom: 1px solid #292929;
+}
+
+.title {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-size: 1rem;
+}

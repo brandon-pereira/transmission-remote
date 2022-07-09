@@ -1,41 +1,21 @@
+import './global.css';
 import { MemoryRouter as Router, Routes, Route } from 'react-router-dom';
 import Dropzone from './Dropzone';
-import './App.css';
+import styles from './App.module.scss';
 import Header from './components/Header/Header';
-import Footer from './components/Footer';
+import Footer from './components/Footer/Footer';
+import Torrents from './components/TorrentsList/TorrentsList';
+
+setInterval(() => {
+  window.electron.ipcRenderer.sendMessage('get-active');
+}, 1000);
 
 const Hello = () => {
   return (
-    <div>
+    <div className={styles.container}>
+      {/* <Dropzone /> */}
       <Header />
-      <Dropzone />
-      <h1>electron-react-boilerplate</h1>
-      <div className="Hello">
-        <a
-          href="https://electron-react-boilerplate.js.org/"
-          target="_blank"
-          rel="noreferrer"
-        >
-          <button type="button">
-            <span role="img" aria-label="books">
-              📚
-            </span>
-            Read our docsss
-          </button>
-        </a>
-        <a
-          href="https://github.com/sponsors/electron-react-boilerplate"
-          target="_blank"
-          rel="noreferrer"
-        >
-          <button type="button">
-            <span role="img" aria-label="books">
-              🙏
-            </span>
-            Donate
-          </button>
-        </a>
-      </div>
+      <Torrents />
       <Footer />
     </div>
   );

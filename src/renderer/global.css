@@ -1,0 +1,27 @@
+:root {
+  --colors-app-shell-background: linear-gradient(#fdfdfd, #dbdbdb);
+  --colors-app-shell-color: #000;
+  --colors-core-background: #101010;
+  --colors-core-color: #aaaaaa;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --colors-app-shell-background: linear-gradient(#45464a, #343538);
+    --colors-app-shell-color: #bfc0c3;
+  }
+}
+
+body {
+  position: relative;
+  height: 100vh;
+  font-family: sans-serif;
+  overflow-y: hidden;
+  margin: 0;
+  background: var(--colors-core-background);
+  color: var(--colors-core-color);
+}
+
+#root {
+  height: 100%;
+}
