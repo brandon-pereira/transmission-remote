@@ -8,7 +8,7 @@ import Torrents from './components/TorrentsList/TorrentsList';
 import './utils/storage';
 
 setInterval(() => {
-  window.electron.ipcRenderer.sendMessage('transmission-get-files');
+  window.electron.transmission.getTorrents();
 }, 1000);
 
 const Hello = () => {

@@ -14,7 +14,8 @@ function TorrentsList() {
   return (
     <div className={styles.container}>
       {torrents.map((t) => (
-        <Torrent title={t.name} {...t} />
+        // eslint-disable-next-line react/jsx-props-no-spreading
+        <Torrent title={t.name} key={t.id} {...t} />
       ))}
     </div>
   );
