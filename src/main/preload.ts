@@ -1,13 +1,11 @@
 import { contextBridge, ipcRenderer, IpcRendererEvent } from 'electron';
+import { ITorrent } from 'types/ITorrent';
 
-export type Channels =
-  | 'ipc-example'
-  | 'transmission-get-files'
-  | 'open-file-picker';
+export type Channels = 'transmission-get-files' | 'open-file-picker';
 
-contextBridge.exposeInMainWorld('electron', {
+export const api = {
   ipcRenderer: {
-    sendMessage(channel: Channels, args: unknown[]) {
+    sendMessage(channel: Channels, args?: unknown[]) {
       ipcRenderer.send(channel, args);
     },
     on(channel: Channels, func: (...args: unknown[]) => void) {
@@ -21,6 +19,19 @@ contextBridge.exposeInMainWorld('electron', {
       ipcRenderer.once(channel, (_event, ...args) => func(...args));
     },
   },
+  transmission: {
+    async getTorrents() {
+      return ipcRenderer.send('transmission-get-files');
+    },
+    onTorrents(cb: (torrents: ITorrent[]) => void) {
+      const subscription = (_event: IpcRendererEvent, torrents: ITorrent[]) =>
+        cb(torrents);
+      ipcRenderer.on('transmission-send-files', subscription);
+      return () => {
+        ipcRenderer.removeListener('transmission-send-files', subscription);
+      };
+    },
+  },
   store: {
     get(val: string) {
       return ipcRenderer.sendSync('electron-store-get', val);
@@ -29,4 +40,6 @@ contextBridge.exposeInMainWorld('electron', {
       ipcRenderer.send('electron-store-set', property, val);
     },
   },
-});
+};
+
+contextBridge.exposeInMainWorld('electron', api);

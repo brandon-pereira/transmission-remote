@@ -1,7 +1,9 @@
 import { dialog, ipcMain } from 'electron';
+import { ITorrent } from '../../types/ITorrent';
 import Transmission from 'transmission-promise';
 import { readFile } from 'fs/promises';
 import store from '../store';
+import normalizeTorrent from './normalizeTorrent';
 
 export type ServerConfiguration = {
   host?: string;
@@ -32,6 +34,10 @@ ipcMain.on('open-file-picker', async () => {
 });
 
 ipcMain.on('transmission-get-files', async (event) => {
-  const files = await transmission.all();
-  event.reply('files', files);
+  const response = await transmission.all();
+  const torrents = response.torrents as ITorrent[];
+  if (!torrents || !Array.isArray(torrents)) {
+    return;
+  }
+  event.reply('transmission-send-files', torrents.map(normalizeTorrent));
 });

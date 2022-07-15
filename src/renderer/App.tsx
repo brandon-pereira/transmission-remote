@@ -1,6 +1,5 @@
 import './global.css';
 import { MemoryRouter as Router, Routes, Route } from 'react-router-dom';
-import Dropzone from './Dropzone';
 import styles from './App.module.scss';
 import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
@@ -14,7 +13,6 @@ setInterval(() => {
 const Hello = () => {
   return (
     <div className={styles.container}>
-      {/* <Dropzone /> */}
       <Header />
       <Torrents />
       <Footer />
