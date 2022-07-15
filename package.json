@@ -1,6 +1,6 @@
 {
-  "name": "electron-react-boilerplate",
-  "description": "A foundation for scalable desktop apps",
+  "name": "transmission-remote",
+  "description": "Modern remote Transmission torrent client",
   "scripts": {
     "build": "concurrently \"npm run build:main\" \"npm run build:renderer\"",
     "build:main": "cross-env NODE_ENV=production TS_NODE_TRANSPILE_ONLY=true webpack --config ./.erb/configs/webpack.config.main.prod.ts",
@@ -31,8 +31,8 @@
     ]
   },
   "build": {
-    "productName": "ElectronReact",
-    "appId": "org.erb.ElectronReact",
+    "productName": "Transmission Remote",
+    "appId": "com.branclon.transmission-remote",
     "asar": true,
     "asarUnpack": "**\\*.{node,dll}",
     "fileAssociations": [
@@ -95,8 +95,8 @@
     ],
     "publish": {
       "provider": "github",
-      "owner": "electron-react-boilerplate",
-      "repo": "electron-react-boilerplate"
+      "owner": "brandon-pereira",
+      "repo": "transmission-remote"
     }
   },
   "repository": {
