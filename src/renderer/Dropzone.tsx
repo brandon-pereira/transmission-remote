@@ -11,10 +11,10 @@ function Dropzone() {
     container.current.addEventListener('drop', function (e) {
       e.preventDefault();
       e.stopPropagation();
-      for (let f of e.dataTransfer.files) {
-        console.log('The file(s) you dragged: ', f);
-        window.electron.ipcRenderer.sendMessage('ondragstart', f.path);
-      }
+      // for (let f of e.dataTransfer.files) {
+      //   console.log('The file(s) you dragged: ', f);
+      //   window.electron.ipcRenderer.sendMessage('ondragstart', f.path);
+      // }
     });
     container.current.addEventListener('dragover', function (e) {
       e.preventDefault();

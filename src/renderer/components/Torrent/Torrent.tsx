@@ -10,8 +10,8 @@ function Torrent({ torrent }: Props) {
   return (
     <div className={styles.container}>
       <h2 className={styles.title}>{torrent.title}</h2>
-      <div>Percent Done: {torrent.percentDone}</div>
-      <div>Download Speed: {torrent.rateDownload}</div>
+      {/* <div>Percent Done: {torrent.percentDone}</div> */}
+      {/* <div>Download Speed: {torrent.rateDownload}</div> */}
     </div>
   );
 }

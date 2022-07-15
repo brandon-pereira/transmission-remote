@@ -1,7 +1,7 @@
 import { dialog, ipcMain } from 'electron';
-import { ITorrent } from '../../types/ITorrent';
 import Transmission from 'transmission-promise';
 import { readFile } from 'fs/promises';
+import { ITorrent } from '../../types/ITorrent';
 import store from '../store';
 import normalizeTorrent from './normalizeTorrent';
 
