@@ -1,9 +1,13 @@
-import { dialog, ipcMain } from 'electron';
+import { app, dialog, ipcMain } from 'electron';
 import Transmission from 'transmission-promise';
 import { readFile } from 'fs/promises';
 import { ITorrent } from '../../types/ITorrent';
 import store from '../store';
 import normalizeTorrent from './normalizeTorrent';
+import {
+  EVENT_OPEN_TORRENT_FILE_PICKER,
+  STORE_REMOTES_SETTINGS,
+} from './events';
 
 export type ServerConfiguration = {
   host?: string;
@@ -12,25 +16,41 @@ export type ServerConfiguration = {
   password?: string;
 };
 
-let servers = store.get('transmission-servers');
+let servers = store.get(STORE_REMOTES_SETTINGS);
 if (!servers || !servers.length) {
   servers = [{ host: 'localhost', port: 9091 }];
-  store.set('transmission-servers', servers);
+  store.set(STORE_REMOTES_SETTINGS, servers);
 }
 // eslint-disable-next-line no-console
 console.log('Connecting to Transmission with Settings:', servers[0]);
 
 const transmission = new Transmission(servers[0]);
 
-ipcMain.on('open-file-picker', async () => {
+export async function addTorrentFromPath(filePath: string) {
+  const fileData = await readFile(filePath, { encoding: 'base64' });
+  transmission.addBase64(fileData);
+}
+
+ipcMain.on(EVENT_OPEN_TORRENT_FILE_PICKER, async () => {
   const file = await dialog.showOpenDialog({
     properties: ['openFile', 'multiSelections'],
     filters: [{ name: 'Torrents', extensions: ['torrent'] }],
   });
   file.filePaths.map(async (filePath) => {
-    const fileData = await readFile(filePath, { encoding: 'base64' });
-    transmission.addBase64(fileData);
+    await addTorrentFromPath(filePath);
   });
+});
+
+app.setAsDefaultProtocolClient('magnet');
+
+// Magnet Link Handler
+app.on('open-url', (_event, url) => {
+  console.log('Adding torrent from URL:', url);
+  transmission.addUrl(url);
+});
+
+app.on('open-file', async (_event, filePath) => {
+  await addTorrentFromPath(filePath);
 });
 
 ipcMain.on('transmission-get-files', async (event) => {

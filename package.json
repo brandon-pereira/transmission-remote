@@ -40,6 +40,14 @@
         "ext": "torrent"
       }
     ],
+    "protocols": [
+      {
+        "name": "Magnet Links",
+        "schemas": [
+          "magnet"
+        ]
+      }
+    ],
     "files": [
       "dist",
       "node_modules",
