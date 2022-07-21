@@ -43,7 +43,7 @@
     "protocols": [
       {
         "name": "Magnet Links",
-        "schemas": [
+        "schemes": [
           "magnet"
         ]
       }
