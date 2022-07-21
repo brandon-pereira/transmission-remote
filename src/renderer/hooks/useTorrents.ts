@@ -24,7 +24,7 @@ function useTorrents() {
     window.electron.transmission.getTorrents();
     setInterval(() => {
       window.electron.transmission.getTorrents();
-    }, 1000);
+    }, 5000);
   }, []);
 
   return {

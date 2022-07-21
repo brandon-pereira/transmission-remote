@@ -12,7 +12,11 @@ export enum TorrentStatus {
 export interface ITorrent {
   id: string;
   title: string;
-  priority: number;
+  eta: number | null;
+  percentDone: number;
+  downloadSize: number;
+  totalSize: number;
+  priority?: number;
   addedDate?: Date;
   creationDate?: Date;
   status: TorrentStatus;

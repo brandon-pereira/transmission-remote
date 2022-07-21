@@ -1,7 +1,7 @@
 :root {
   --colors-app-shell-background: linear-gradient(#fdfdfd, #dbdbdb);
   --colors-app-shell-color: #000;
-  --colors-core-background: #101010;
+  --colors-core-background: #202225;
   --colors-core-color: #aaaaaa;
 }
 
@@ -13,13 +13,14 @@
 }
 
 body {
+  font-family: 'Source Sans Pro', sans-serif;
   position: relative;
   height: 100vh;
-  font-family: sans-serif;
   overflow-y: hidden;
   margin: 0;
   background: var(--colors-core-background);
   color: var(--colors-core-color);
+  user-select: none;
 }
 
 #root {
