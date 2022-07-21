@@ -45,7 +45,6 @@ app.setAsDefaultProtocolClient('magnet');
 
 // Magnet Link Handler
 app.on('open-url', (_event, url) => {
-  console.log('Adding torrent from URL:', url);
   transmission.addUrl(url);
 });
 

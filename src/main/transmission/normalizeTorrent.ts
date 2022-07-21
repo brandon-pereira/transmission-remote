@@ -1,4 +1,4 @@
-import { ITorrent, TorrentStatus } from '../../types/ITorrent';
+import { ITorrent } from '../../types/ITorrent';
 
 function getTorrentEta(eta: number) {
   // -1 means not available and -2 means unknown.

@@ -1,5 +1,4 @@
 import classnames from 'classnames';
-import prettyBytes from 'pretty-bytes';
 import {
   getProgressBarColorFromStatus,
   getTorrentSubtitle,

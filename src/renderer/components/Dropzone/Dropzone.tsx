@@ -8,7 +8,7 @@ function Dropzone() {
       return;
     }
 
-    container.current.addEventListener('drop', function (e) {
+    container.current.addEventListener('drop', (e) => {
       e.preventDefault();
       e.stopPropagation();
       // for (let f of e.dataTransfer.files) {
@@ -16,7 +16,7 @@ function Dropzone() {
       //   window.electron.ipcRenderer.sendMessage('ondragstart', f.path);
       // }
     });
-    container.current.addEventListener('dragover', function (e) {
+    container.current.addEventListener('dragover', (e) => {
       e.preventDefault();
       e.stopPropagation();
     });
