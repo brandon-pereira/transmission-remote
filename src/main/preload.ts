@@ -1,4 +1,5 @@
 import { contextBridge, ipcRenderer, IpcRendererEvent } from 'electron';
+import { IServerHealth } from 'types/IRemote';
 import { ITorrent } from 'types/ITorrent';
 
 export type Channels = 'transmission-get-files' | 'open-file-picker';
@@ -29,6 +30,14 @@ export const api = {
       ipcRenderer.on('transmission-send-files', subscription);
       return () => {
         ipcRenderer.removeListener('transmission-send-files', subscription);
+      };
+    },
+    onServerHealthChange(cb: (health: IServerHealth) => void) {
+      const subscription = (_event: IpcRendererEvent, health: IServerHealth) =>
+        cb(health);
+      ipcRenderer.on('transmission-remote-health', subscription);
+      return () => {
+        ipcRenderer.removeListener('transmission-remote-health', subscription);
       };
     },
   },

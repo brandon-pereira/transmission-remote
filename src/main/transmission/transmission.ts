@@ -54,10 +54,14 @@ app.on('open-file', async (_event, filePath) => {
 });
 
 ipcMain.on('transmission-get-files', async (event) => {
-  const response = await transmission.all();
-  const torrents = response.torrents as ITorrent[];
-  if (!torrents || !Array.isArray(torrents)) {
-    return;
+  try {
+    const response = await transmission.all();
+    const torrents = response.torrents as ITorrent[];
+    if (!torrents || !Array.isArray(torrents)) {
+      return;
+    }
+    event.reply('transmission-send-files', torrents.map(normalizeTorrent));
+  } catch (err) {
+    event.reply('transmission-server-heath', 'UNHEALTHY');
   }
-  event.reply('transmission-send-files', torrents.map(normalizeTorrent));
 });
