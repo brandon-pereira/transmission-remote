@@ -24,19 +24,25 @@ function Torrent({ torrent }: Props) {
 
   return (
     <div className={styles.container}>
-      <button type="button" onClick={toggleTorrentState}>
-        {isStopped ? 'Start' : 'Stop'}
-      </button>
       <h2 className={styles.title}>{torrent.title}</h2>
       <h2 className={styles.subtitle}>{getTorrentSubtitle(torrent)}</h2>
-      <div className={styles.progressBar}>
-        <div
-          style={{ width: `${torrent.percentDone}%` }}
-          className={classnames(
-            styles.bar,
-            styles[getProgressBarColorFromStatus(torrent.status)]
-          )}
-        />
+      <div className={styles.progressBarContainer}>
+        <div className={styles.progressBar}>
+          <div
+            style={{ width: `${torrent.percentDone}%` }}
+            className={classnames(
+              styles.bar,
+              styles[getProgressBarColorFromStatus(torrent.status)]
+            )}
+          />
+        </div>
+        <button
+          className={classnames(styles.button, styles.playPause)}
+          type="button"
+          onClick={toggleTorrentState}
+        >
+          {isStopped ? '▶️' : '⏸'}
+        </button>
       </div>
     </div>
   );
