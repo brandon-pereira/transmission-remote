@@ -14,7 +14,6 @@ interface Props {
 
 function Torrent({ torrent }: Props) {
   const isStopped = getIsStoppedStateFromStatus(torrent.status);
-  console.log(torrent.title, isStopped);
   const toggleTorrentState = useCallback(async () => {
     if (isStopped) {
       await window.electron.transmission.startTorrents(torrent.id);
