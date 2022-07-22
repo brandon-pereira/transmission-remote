@@ -37,3 +37,11 @@ To package apps for the local platform:
 ```bash
 npm run package
 ```
+
+## Running on Mac from GitHub Releases
+
+🤮
+
+```bash
+ xattr -cr /Applications/Transmission\ Remote.app
+```
