@@ -1,0 +1,17 @@
+.container {
+  position: relative;
+  flex: 1;
+  overflow: scroll;
+}
+
+.active {
+  &:before {
+    content: '';
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(247, 245, 255, 0.3);
+  }
+}
