@@ -2,7 +2,7 @@ import { IServerHealth } from 'types/IRemote';
 import { contextBridge, ipcRenderer, IpcRendererEvent } from 'electron';
 import { ITorrent } from 'types/ITorrent';
 
-export type Channels = 'transmission-get-files' | 'open-file-picker';
+export type Channels = 'open-file-picker';
 
 export const api = {
   ipcRenderer: {
@@ -21,17 +21,6 @@ export const api = {
     },
   },
   transmission: {
-    async getTorrents() {
-      return ipcRenderer.send('transmission-get-files');
-    },
-    onTorrents(cb: (torrents: ITorrent[]) => void) {
-      const subscription = (_event: IpcRendererEvent, torrents: ITorrent[]) =>
-        cb(torrents);
-      ipcRenderer.on('transmission-send-files', subscription);
-      return () => {
-        ipcRenderer.removeListener('transmission-send-files', subscription);
-      };
-    },
     onServerHealthChange(cb: (health: IServerHealth) => void) {
       const subscription = (_event: IpcRendererEvent, health: IServerHealth) =>
         cb(health);
@@ -39,6 +28,9 @@ export const api = {
       return () => {
         ipcRenderer.removeListener('transmission-remote-health', subscription);
       };
+    },
+    async getTorrents(): Promise<ITorrent[]> {
+      return ipcRenderer.invoke('transmission-get-torrents');
     },
     async startTorrents(torrents: string | string[]): Promise<void> {
       return ipcRenderer.invoke('transmission-start-torrents', torrents);

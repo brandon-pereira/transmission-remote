@@ -48,27 +48,27 @@ app.on('open-url', (_event, url) => {
   transmission.addUrl(url);
 });
 
+// File Double Click Handler
 app.on('open-file', async (_event, filePath) => {
   await addTorrentFromPath(filePath);
 });
 
-ipcMain.on('transmission-get-files', async (event) => {
-  try {
-    const response = await transmission.all();
-    const torrents = response.torrents as ITorrent[];
-    if (!torrents || !Array.isArray(torrents)) {
-      return;
-    }
-    event.reply('transmission-send-files', torrents.map(normalizeTorrent));
-  } catch (err) {
-    event.reply('transmission-server-heath', 'UNHEALTHY');
+// Renderer Requests Torrents List
+ipcMain.handle('transmission-get-torrents', async () => {
+  const response = await transmission.all();
+  const torrents = response.torrents as ITorrent[];
+  if (!torrents || !Array.isArray(torrents)) {
+    return [];
   }
+  return torrents.map(normalizeTorrent);
 });
 
+// Renderer Starts Torrents
 ipcMain.handle('transmission-start-torrents', async (_event, ids: string[]) => {
   return transmission.start(ids);
 });
 
+// Renderer Stops Torrent
 ipcMain.handle('transmission-stop-torrents', async (_event, ids: string[]) => {
   return transmission.stop(ids);
 });
