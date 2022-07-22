@@ -20,4 +20,5 @@ export interface ITorrent {
   addedDate?: Date;
   creationDate?: Date;
   status: TorrentStatus;
+  __raw: Readonly<unknown>;
 }

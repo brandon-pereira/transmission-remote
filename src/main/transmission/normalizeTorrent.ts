@@ -22,5 +22,6 @@ export default function normalizeTorrent(torrent: any): ITorrent {
     totalSize: torrent.totalSize,
     status: torrent.status,
     priority: torrent.priority,
+    __raw: torrent,
   };
 }
