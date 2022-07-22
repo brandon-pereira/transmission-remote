@@ -1,5 +1,5 @@
-import { contextBridge, ipcRenderer, IpcRendererEvent } from 'electron';
 import { IServerHealth } from 'types/IRemote';
+import { contextBridge, ipcRenderer, IpcRendererEvent } from 'electron';
 import { ITorrent } from 'types/ITorrent';
 
 export type Channels = 'transmission-get-files' | 'open-file-picker';
@@ -39,6 +39,12 @@ export const api = {
       return () => {
         ipcRenderer.removeListener('transmission-remote-health', subscription);
       };
+    },
+    async startTorrents(torrents: string | string[]): Promise<void> {
+      return ipcRenderer.invoke('transmission-start-torrents', torrents);
+    },
+    async stopTorrents(torrents: string | string[]): Promise<void> {
+      return ipcRenderer.invoke('transmission-stop-torrents', torrents);
     },
   },
   store: {

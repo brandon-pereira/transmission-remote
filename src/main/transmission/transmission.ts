@@ -64,3 +64,11 @@ ipcMain.on('transmission-get-files', async (event) => {
     event.reply('transmission-server-heath', 'UNHEALTHY');
   }
 });
+
+ipcMain.handle('transmission-start-torrents', async (_event, ids: string[]) => {
+  return transmission.start(ids);
+});
+
+ipcMain.handle('transmission-stop-torrents', async (_event, ids: string[]) => {
+  return transmission.stop(ids);
+});

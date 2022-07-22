@@ -12,6 +12,10 @@ export function getProgressBarColorFromStatus(status: TorrentStatus) {
   return 'default';
 }
 
+export function getIsStoppedStateFromStatus(status: TorrentStatus) {
+  return ![TorrentStatus.SEED, TorrentStatus.DOWNLOAD].includes(status);
+}
+
 export function getTorrentSubtitle(torrent: ITorrent) {
   let eta = 'unknown';
   if (torrent.eta) {
