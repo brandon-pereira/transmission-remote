@@ -2,9 +2,12 @@ import { app, dialog, ipcMain } from 'electron';
 import Transmission from 'transmission-promise';
 import { readFile } from 'fs/promises';
 import { ITorrent } from '../../types/ITorrent';
+import { IServer, IServerHealth } from '../../types/IServer';
+
 import store from '../store';
 import normalizeTorrent from './normalizeTorrent';
 import {
+  EVENT_LIST_SERVERS,
   EVENT_LIST_TORRENTS,
   EVENT_OPEN_TORRENT_FILE_PICKER,
   EVENT_START_TORRENTS,
@@ -56,14 +59,29 @@ app.on('open-file', async (_event, filePath) => {
   await addTorrentFromPath(filePath);
 });
 
+ipcMain.handle(EVENT_LIST_SERVERS, async () => {
+  const raw = store.get(STORE_REMOTES_SETTINGS);
+  const formatted: IServer[] = raw.map((server, i) => ({
+    ...server,
+    isDefault: i === 0,
+    isActive: i === 0,
+    health: IServerHealth.UNHEALTHY,
+  }));
+  return formatted;
+});
+
 // Renderer Requests Torrents List
 ipcMain.handle(EVENT_LIST_TORRENTS, async () => {
-  const response = await transmission.all();
-  const torrents = response.torrents as ITorrent[];
-  if (!torrents || !Array.isArray(torrents)) {
+  try {
+    const response = await transmission.all();
+    const torrents = response.torrents as ITorrent[];
+    if (!torrents || !Array.isArray(torrents)) {
+      return [];
+    }
+    return torrents.map(normalizeTorrent);
+  } catch (err) {
     return [];
   }
-  return torrents.map(normalizeTorrent);
 });
 
 // Renderer Starts Torrents

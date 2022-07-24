@@ -1,7 +1,8 @@
-import { IServerHealth } from 'types/IServer';
+import { IServer, IServerHealth } from 'types/IServer';
 import { contextBridge, ipcRenderer, IpcRendererEvent } from 'electron';
 import { ITorrent } from 'types/ITorrent';
 import {
+  EVENT_LIST_SERVERS,
   EVENT_LIST_TORRENTS,
   EVENT_START_TORRENTS,
   EVENT_STOP_TORRENTS,
@@ -33,6 +34,9 @@ export const api = {
       return () => {
         ipcRenderer.removeListener('transmission-remote-health', subscription);
       };
+    },
+    async getServers(): Promise<IServer[]> {
+      return ipcRenderer.invoke(EVENT_LIST_SERVERS);
     },
     async getTorrents(): Promise<ITorrent[]> {
       return ipcRenderer.invoke(EVENT_LIST_TORRENTS);
