@@ -1,6 +1,11 @@
-import { IServerHealth } from 'types/IRemote';
+import { IServerHealth } from 'types/IServer';
 import { contextBridge, ipcRenderer, IpcRendererEvent } from 'electron';
 import { ITorrent } from 'types/ITorrent';
+import {
+  EVENT_LIST_TORRENTS,
+  EVENT_START_TORRENTS,
+  EVENT_STOP_TORRENTS,
+} from './transmission/events';
 
 export type Channels = 'open-file-picker';
 
@@ -30,13 +35,13 @@ export const api = {
       };
     },
     async getTorrents(): Promise<ITorrent[]> {
-      return ipcRenderer.invoke('transmission-get-torrents');
+      return ipcRenderer.invoke(EVENT_LIST_TORRENTS);
     },
     async startTorrents(torrents: string | string[]): Promise<void> {
-      return ipcRenderer.invoke('transmission-start-torrents', torrents);
+      return ipcRenderer.invoke(EVENT_START_TORRENTS, torrents);
     },
     async stopTorrents(torrents: string | string[]): Promise<void> {
-      return ipcRenderer.invoke('transmission-stop-torrents', torrents);
+      return ipcRenderer.invoke(EVENT_STOP_TORRENTS, torrents);
     },
   },
   store: {

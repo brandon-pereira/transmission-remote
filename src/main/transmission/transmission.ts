@@ -5,7 +5,10 @@ import { ITorrent } from '../../types/ITorrent';
 import store from '../store';
 import normalizeTorrent from './normalizeTorrent';
 import {
+  EVENT_LIST_TORRENTS,
   EVENT_OPEN_TORRENT_FILE_PICKER,
+  EVENT_START_TORRENTS,
+  EVENT_STOP_TORRENTS,
   STORE_REMOTES_SETTINGS,
 } from './events';
 
@@ -54,7 +57,7 @@ app.on('open-file', async (_event, filePath) => {
 });
 
 // Renderer Requests Torrents List
-ipcMain.handle('transmission-get-torrents', async () => {
+ipcMain.handle(EVENT_LIST_TORRENTS, async () => {
   const response = await transmission.all();
   const torrents = response.torrents as ITorrent[];
   if (!torrents || !Array.isArray(torrents)) {
@@ -64,11 +67,11 @@ ipcMain.handle('transmission-get-torrents', async () => {
 });
 
 // Renderer Starts Torrents
-ipcMain.handle('transmission-start-torrents', async (_event, ids: string[]) => {
+ipcMain.handle(EVENT_START_TORRENTS, async (_event, ids: string[]) => {
   return transmission.start(ids);
 });
 
 // Renderer Stops Torrent
-ipcMain.handle('transmission-stop-torrents', async (_event, ids: string[]) => {
+ipcMain.handle(EVENT_STOP_TORRENTS, async (_event, ids: string[]) => {
   return transmission.stop(ids);
 });
