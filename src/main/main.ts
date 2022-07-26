@@ -16,6 +16,7 @@ import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
 import './store';
 import './transmission/transmission';
+import { EVENT_OPEN_SERVER_SETTINGS } from './transmission/events';
 
 export default class AppUpdater {
   constructor() {
@@ -52,6 +53,8 @@ const installExtensions = async () => {
     .catch(console.log);
 };
 
+let settingsWindow: BrowserWindow | null = null;
+
 const createWindow = async () => {
   if (isDebug) {
     await installExtensions();
@@ -78,7 +81,7 @@ const createWindow = async () => {
     },
   });
 
-  mainWindow.loadURL(resolveHtmlPath('index.html'));
+  mainWindow.loadURL(`${resolveHtmlPath('index.html')}`);
 
   mainWindow.on('ready-to-show', () => {
     if (!mainWindow) {
@@ -93,6 +96,8 @@ const createWindow = async () => {
 
   mainWindow.on('closed', () => {
     mainWindow = null;
+    settingsWindow?.close();
+    settingsWindow = null;
   });
 
   ipcMain.on('ondragstart', (event, filePath) => {
@@ -100,7 +105,6 @@ const createWindow = async () => {
     event.sender.startDrag({
       file: filePath,
       icon: filePath,
-      // icon: '/path/to/icon.jpg',
     });
   });
 
@@ -142,3 +146,23 @@ app
     });
   })
   .catch(console.log);
+
+ipcMain.on(EVENT_OPEN_SERVER_SETTINGS, () => {
+  if (settingsWindow) {
+    settingsWindow.show();
+    return;
+  }
+  settingsWindow = new BrowserWindow({
+    width: 400,
+    height: 500,
+    resizable: false,
+    webPreferences: {
+      devTools: false,
+      preload: app.isPackaged
+        ? path.join(__dirname, 'preload.js')
+        : path.join(__dirname, '../../.erb/dll/preload.js'),
+    },
+  });
+
+  settingsWindow.loadURL(`${resolveHtmlPath('index.html')}#server-settings`);
+});

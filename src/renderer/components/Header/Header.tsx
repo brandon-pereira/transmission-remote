@@ -18,7 +18,13 @@ function Header() {
         >
           Add Torrent
         </button>
-        <button type="button" className={styles.button}>
+        <button
+          onClick={() => {
+            window.electron.transmission.openServerSettings();
+          }}
+          type="button"
+          className={styles.button}
+        >
           {activeServer?.host}:{activeServer?.port}
         </button>
       </div>

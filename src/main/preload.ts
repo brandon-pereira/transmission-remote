@@ -5,6 +5,7 @@ import {
   EVENT_ADD_TORRENT_FROM_PATH,
   EVENT_LIST_SERVERS,
   EVENT_LIST_TORRENTS,
+  EVENT_OPEN_SERVER_SETTINGS,
   EVENT_OPEN_TORRENT_FILE_PICKER,
   EVENT_START_TORRENTS,
   EVENT_STOP_TORRENTS,
@@ -52,6 +53,9 @@ const api = {
     },
     openFilePicker() {
       ipcRenderer.send(EVENT_OPEN_TORRENT_FILE_PICKER);
+    },
+    openServerSettings() {
+      ipcRenderer.send(EVENT_OPEN_SERVER_SETTINGS);
     },
   },
   store: {
