@@ -134,9 +134,6 @@ app
   .whenReady()
   .then(() => {
     createWindow();
-    app.on('open-file', (e) => {
-      console.log('OPEN', e);
-    });
 
     app.on('activate', () => {
       // On macOS it's common to re-create a window in the app when the
