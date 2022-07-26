@@ -13,7 +13,7 @@ function Header() {
           aria-label="Add Torrent"
           className={styles.button}
           onClick={() => {
-            window.electron.ipcRenderer.sendMessage('open-file-picker');
+            window.electron.transmission.openFilePicker();
           }}
         >
           Add Torrent

@@ -7,6 +7,7 @@ import { IServer, IServerHealth } from '../../types/IServer';
 import store from '../store';
 import normalizeTorrent from './normalizeTorrent';
 import {
+  EVENT_ADD_TORRENT_FROM_PATH,
   EVENT_LIST_SERVERS,
   EVENT_LIST_TORRENTS,
   EVENT_OPEN_TORRENT_FILE_PICKER,
@@ -91,5 +92,17 @@ ipcMain.handle(EVENT_START_TORRENTS, async (_event, ids: string[]) => {
 
 // Renderer Stops Torrent
 ipcMain.handle(EVENT_STOP_TORRENTS, async (_event, ids: string[]) => {
-  return transmission.stop(ids);
+  try {
+    return await transmission.stop(ids);
+  } catch (err) {
+    return 'UH OH';
+  }
 });
+
+// Renderer Stops Torrent
+ipcMain.handle(
+  EVENT_ADD_TORRENT_FROM_PATH,
+  async (_event, filePath: string) => {
+    return addTorrentFromPath(filePath);
+  }
+);

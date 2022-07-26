@@ -20,7 +20,13 @@ function DropZone({ children }: Props) {
       setDropping(false);
       const uploads = Array.from(e.dataTransfer?.files || []).map(
         async (file) => {
-          console.log('The file(s) you dragged: ', file);
+          try {
+            // eslint-disable-next-line no-console
+            console.log(file);
+            window.electron.transmission.addTorrentFromPath(file.path);
+          } catch (err) {
+            alert(err);
+          }
         }
       );
       await Promise.all([uploads]);
