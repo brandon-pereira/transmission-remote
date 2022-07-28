@@ -16,6 +16,10 @@ export function getIsStoppedStateFromStatus(status: TorrentStatus) {
   return ![TorrentStatus.SEED, TorrentStatus.DOWNLOAD].includes(status);
 }
 
+function roundNumber(number: number) {
+  return number?.toFixed(2) || 0;
+}
+
 export function getTorrentSubtitle(torrent: ITorrent) {
   let eta = 'unknown';
   if (torrent.eta) {
@@ -23,9 +27,17 @@ export function getTorrentSubtitle(torrent: ITorrent) {
       includeSeconds: true,
     });
   }
-  return `${prettyBytes(torrent.downloadSize)} of ${prettyBytes(
-    torrent.totalSize
-  )} (${torrent.percentDone.toFixed(2)}%) - Remaining time ${eta}`;
+  if (torrent.status === TorrentStatus.SEED) {
+    return `${prettyBytes(
+      torrent.sizeStats.downloaded
+    )}, uploaded ${prettyBytes(
+      torrent.sizeStats.uploaded
+    )} (Ratio: ${roundNumber(torrent.ratio)}) - remaining time ${eta}`;
+  }
+
+  return `${prettyBytes(torrent.sizeStats.downloaded)} of ${prettyBytes(
+    torrent.sizeStats.total
+  )} (${roundNumber(torrent.percentDone)}%) - Remaining time ${eta}`;
 }
 
 export function getTorrentTertiaryTitle(torrent: ITorrent) {

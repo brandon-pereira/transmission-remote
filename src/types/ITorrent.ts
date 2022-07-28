@@ -17,12 +17,15 @@ export interface ITorrent {
   eta: number | null;
   // percentage completed downloading
   percentDone: number;
-  // amount downloaded in bytes
-  downloadSize: number;
-  // total size in bytes
-  totalSize: number;
+  // the ratio of seed to download
+  ratio: number;
   // the current torrent status
   status: TorrentStatus;
+  sizeStats: {
+    total: number;
+    downloaded: number;
+    uploaded: number;
+  };
   // peer stats info
   peerStats: {
     limit: number;

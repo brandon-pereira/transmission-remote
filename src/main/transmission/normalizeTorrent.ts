@@ -18,9 +18,13 @@ export default function normalizeTorrent(torrent: any): ITorrent {
     title: torrent.name,
     eta: getTorrentEta(torrent.eta),
     percentDone: torrent.percentDone * 100,
-    downloadSize: torrent.downloadedEver,
-    totalSize: torrent.totalSize,
     status: torrent.status,
+    ratio: torrent.uploadRatio,
+    sizeStats: {
+      downloaded: torrent.downloadedEver,
+      total: torrent.totalSize,
+      uploaded: torrent.uploadedEver,
+    },
     peerStats: {
       limit: torrent['peer-limit'],
       givers: torrent.peersSendingToUs,
