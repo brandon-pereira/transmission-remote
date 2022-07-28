@@ -27,3 +27,19 @@ export function getTorrentSubtitle(torrent: ITorrent) {
     torrent.totalSize
   )} (${torrent.percentDone.toFixed(2)}%) - Remaining time ${eta}`;
 }
+
+export function getTorrentTertiaryTitle(torrent: ITorrent) {
+  if (TorrentStatus.STOPPED === torrent.status) {
+    return 'Paused';
+  }
+  if (TorrentStatus.SEED === torrent.status) {
+    return `Seeding to ${torrent.peerStats.getters} of ${
+      torrent.peerStats.connected
+    } peers - UL: ${prettyBytes(torrent.speeds.upload)}/s`;
+  }
+  return `Downloading from ${torrent.peerStats.givers} of ${
+    torrent.peerStats.connected
+  } peers - DL: ${prettyBytes(torrent.speeds.download)}/s, UL: ${
+    torrent.speeds.upload || '-- kB'
+  }/s`;
+}

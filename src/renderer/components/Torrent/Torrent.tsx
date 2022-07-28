@@ -4,6 +4,7 @@ import {
   getProgressBarColorFromStatus,
   getTorrentSubtitle,
   getIsStoppedStateFromStatus,
+  getTorrentTertiaryTitle,
 } from 'renderer/utils/torrents';
 import type { ITorrent } from 'types/ITorrent';
 import styles from './Torrent.module.scss';
@@ -44,6 +45,9 @@ function Torrent({ torrent }: Props) {
           {isStopped ? '▶️' : '⏸'}
         </button>
       </div>
+      <h2 className={classnames(styles.subtitle, styles.tertiaryTitle)}>
+        {getTorrentTertiaryTitle(torrent)}
+      </h2>
     </div>
   );
 }

@@ -21,7 +21,16 @@ export default function normalizeTorrent(torrent: any): ITorrent {
     downloadSize: torrent.downloadedEver,
     totalSize: torrent.totalSize,
     status: torrent.status,
-    priority: torrent.priority,
+    peerStats: {
+      limit: torrent['peer-limit'],
+      givers: torrent.peersSendingToUs,
+      getters: torrent.peersGettingFromUs,
+      connected: torrent.peersConnected,
+    },
+    speeds: {
+      upload: torrent.rateUpload,
+      download: torrent.rateDownload,
+    },
     __raw: torrent,
   };
 }

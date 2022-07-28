@@ -11,14 +11,30 @@ export enum TorrentStatus {
 
 export interface ITorrent {
   id: string;
+  // Title of the torrent
   title: string;
+  // eta from epoch till completion
   eta: number | null;
+  // percentage completed downloading
   percentDone: number;
+  // amount downloaded in bytes
   downloadSize: number;
+  // total size in bytes
   totalSize: number;
-  priority?: number;
-  addedDate?: Date;
-  creationDate?: Date;
+  // the current torrent status
   status: TorrentStatus;
+  // peer stats info
+  peerStats: {
+    limit: number;
+    connected: number;
+    givers: number;
+    getters: number;
+  };
+  // download / upload speeds
+  speeds: {
+    download: number;
+    upload: number;
+  };
+  // original, raw torrent
   __raw: Readonly<unknown>;
 }
