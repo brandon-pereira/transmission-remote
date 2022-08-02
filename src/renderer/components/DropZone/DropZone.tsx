@@ -1,6 +1,7 @@
 import classNames from 'classnames';
 import { useEffect, useState, useRef } from 'react';
 import styles from './DropZone.module.scss';
+
 interface Props {
   children: React.ReactNode;
 }
@@ -20,13 +21,7 @@ function DropZone({ children }: Props) {
       setDropping(false);
       const uploads = Array.from(e.dataTransfer?.files || []).map(
         async (file) => {
-          try {
-            // eslint-disable-next-line no-console
-            console.log(file);
-            window.electron.transmission.addTorrentFromPath(file.path);
-          } catch (err) {
-            alert(err);
-          }
+          window.electron.transmission.addTorrentFromPath(file.path);
         }
       );
       await Promise.all([uploads]);
@@ -35,7 +30,7 @@ function DropZone({ children }: Props) {
       e.preventDefault();
       e.stopPropagation();
     });
-    container.current?.addEventListener('dragenter', (e) => {
+    container.current?.addEventListener('dragenter', () => {
       setDropping(true);
     });
     container.current?.addEventListener('dragleave', (e) => {
