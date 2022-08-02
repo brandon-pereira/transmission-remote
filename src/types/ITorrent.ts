@@ -21,6 +21,8 @@ export interface ITorrent {
   ratio: number;
   // the current torrent status
   status: TorrentStatus;
+  // true when finished downloading and seeding
+  isFinished: boolean;
   sizeStats: {
     total: number;
     downloaded: number;

@@ -27,12 +27,16 @@ export function getTorrentSubtitle(torrent: ITorrent) {
       includeSeconds: true,
     });
   }
-  if (torrent.status === TorrentStatus.SEED) {
-    return `${prettyBytes(
+  if (torrent.status === TorrentStatus.SEED || torrent.isFinished) {
+    let msg = `${prettyBytes(
       torrent.sizeStats.downloaded
     )}, uploaded ${prettyBytes(
       torrent.sizeStats.uploaded
-    )} (Ratio: ${roundNumber(torrent.ratio)}) - remaining time ${eta}`;
+    )} (Ratio: ${roundNumber(torrent.ratio)})`;
+    if (!torrent.isFinished) {
+      msg += `- remaining time ${eta}`;
+    }
+    return msg;
   }
 
   return `${prettyBytes(torrent.sizeStats.downloaded)} of ${prettyBytes(
@@ -41,6 +45,9 @@ export function getTorrentSubtitle(torrent: ITorrent) {
 }
 
 export function getTorrentTertiaryTitle(torrent: ITorrent) {
+  if (torrent.isFinished && TorrentStatus.STOPPED === torrent.status) {
+    return `Seeding complete`;
+  }
   if (TorrentStatus.STOPPED === torrent.status) {
     return 'Paused';
   }

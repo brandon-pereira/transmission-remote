@@ -1,5 +1,5 @@
 function ServerSettings() {
-  return <div>HI</div>;
+  return <div>Coming Soon</div>;
 }
 
 export default ServerSettings;

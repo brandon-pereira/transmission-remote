@@ -20,6 +20,7 @@ export default function normalizeTorrent(torrent: any): ITorrent {
     percentDone: torrent.percentDone * 100,
     status: torrent.status,
     ratio: torrent.uploadRatio,
+    isFinished: torrent.isFinished,
     sizeStats: {
       downloaded: torrent.downloadedEver,
       total: torrent.totalSize,
