@@ -44,6 +44,12 @@ export function getTorrentTertiaryTitle(torrent: ITorrent) {
   if (TorrentStatus.STOPPED === torrent.status) {
     return 'Paused';
   }
+  if (TorrentStatus.CHECK_WAIT === torrent.status) {
+    return 'Queued to check files';
+  }
+  if (TorrentStatus.CHECK === torrent.status) {
+    return 'Verifying local data';
+  }
   if (TorrentStatus.SEED === torrent.status) {
     return `Seeding to ${torrent.peerStats.getters} of ${
       torrent.peerStats.connected
@@ -52,6 +58,6 @@ export function getTorrentTertiaryTitle(torrent: ITorrent) {
   return `Downloading from ${torrent.peerStats.givers} of ${
     torrent.peerStats.connected
   } peers - DL: ${prettyBytes(torrent.speeds.download)}/s, UL: ${
-    torrent.speeds.upload || '-- kB'
+    torrent.speeds.upload ? prettyBytes(torrent.speeds.upload) : '0 kB'
   }/s`;
 }
