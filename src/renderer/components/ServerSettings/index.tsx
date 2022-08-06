@@ -10,7 +10,7 @@ function ServerSettings() {
     handleSubmit,
     watch,
     formState: { errors },
-  } = useForm();
+  } = useForm<IServer>();
 
   const onSubmit = async (data: IServer) => {
     console.log('final data', data);
