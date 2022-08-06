@@ -2,6 +2,7 @@ import { IServer, IServerHealth } from 'types/IServer';
 import { contextBridge, ipcRenderer, IpcRendererEvent } from 'electron';
 import { ITorrent } from 'types/ITorrent';
 import {
+  EVENT_ADD_SERVER,
   EVENT_ADD_TORRENT_FROM_PATH,
   EVENT_LIST_SERVERS,
   EVENT_LIST_TORRENTS,
@@ -38,6 +39,9 @@ const api = {
     },
     async getServers(): Promise<IServer[]> {
       return ipcRenderer.invoke(EVENT_LIST_SERVERS);
+    },
+    async addServer(server: IServer): Promise<IServer[]> {
+      return ipcRenderer.invoke(EVENT_ADD_SERVER, server);
     },
     async getTorrents(): Promise<ITorrent[]> {
       return ipcRenderer.invoke(EVENT_LIST_TORRENTS);

@@ -9,11 +9,12 @@
   :root {
     --colors-app-shell-background: linear-gradient(#45464a, #343538);
     --colors-app-shell-color: #bfc0c3;
+    --fonts-primary: 'Source Sans Pro', sans-serif;
   }
 }
 
 body {
-  font-family: 'Source Sans Pro', sans-serif;
+  font-family: var(--fonts-primary);
   position: relative;
   height: 100vh;
   overflow-y: hidden;

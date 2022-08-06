@@ -1,0 +1,19 @@
+.container {
+  width: 100%;
+  margin-bottom: 8px;
+}
+
+.label {
+  display: block;
+}
+
+.input {
+  box-sizing: border-box;
+  background: #fff;
+  border-radius: 5px;
+  border: none;
+  width: 100%;
+  font-family: var(--fonts-primary);
+  font-size: 16px;
+  padding: 12px 4px;
+}

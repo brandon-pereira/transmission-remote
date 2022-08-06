@@ -7,6 +7,7 @@ import { IServer, IServerHealth } from '../../types/IServer';
 import store from '../store';
 import normalizeTorrent from './normalizeTorrent';
 import {
+  EVENT_ADD_SERVER,
   EVENT_ADD_TORRENT_FROM_PATH,
   EVENT_LIST_SERVERS,
   EVENT_LIST_TORRENTS,
@@ -31,7 +32,7 @@ if (!servers || !servers.length) {
 // eslint-disable-next-line no-console
 console.log('Connecting to Transmission with Settings:', servers[0]);
 
-const transmission = new Transmission(servers[0]);
+let transmission = new Transmission(servers[0]);
 
 export async function addTorrentFromPath(filePath: string) {
   const fileData = await readFile(filePath, { encoding: 'base64' });
@@ -58,6 +59,15 @@ app.on('open-url', (_event, url) => {
 // File Double Click Handler
 app.on('open-file', async (_event, filePath) => {
   await addTorrentFromPath(filePath);
+});
+
+ipcMain.handle(EVENT_ADD_SERVER, async (_event, server: IServer) => {
+  const prev = store.get(STORE_REMOTES_SETTINGS);
+  const next = [server, ...prev];
+  const tempServer = new Transmission(server);
+  await tempServer.sessionStats();
+  store.set(STORE_REMOTES_SETTINGS, next);
+  transmission = tempServer;
 });
 
 ipcMain.handle(EVENT_LIST_SERVERS, async () => {
