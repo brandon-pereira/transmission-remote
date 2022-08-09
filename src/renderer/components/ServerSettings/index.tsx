@@ -3,14 +3,22 @@ import { IServer } from 'types/IServer';
 
 import styles from './ServerSettings.module.scss';
 import FormInput from '../Forms/Input/Input';
+import { useState } from 'react';
+import FormError from '../Forms/Error/Error';
 
 function ServerSettings() {
+  const [serverError, setServerError] = useState<string | null>(null);
   const {
     register,
     handleSubmit,
     watch,
     formState: { errors },
-  } = useForm<IServer>();
+  } = useForm<IServer>({
+    defaultValues: {
+      host: 'localhost',
+      port: 9091,
+    },
+  });
 
   const onSubmit = async (data: IServer) => {
     console.log('final data', data);
@@ -19,11 +27,14 @@ function ServerSettings() {
       console.log('ADDED');
     } catch (err) {
       console.log('ERROR', err);
+      console.log(typeof err, Object.keys(err));
+      setServerError((err as Error).toString());
     }
   };
 
   return (
     <div className={styles.container}>
+      {serverError && <FormError errorMessage={serverError} />}
       <p>
         Please specify the remote Transmission servers details so we can connect
         to this server.
