@@ -1,10 +1,11 @@
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { IServer } from 'types/IServer';
 
 import styles from './ServerSettings.module.scss';
 import FormInput from '../Forms/Input/Input';
-import { useState } from 'react';
 import FormError from '../Forms/Error/Error';
+import Button from '../Forms/Button/Button';
 
 function ServerSettings() {
   const [serverError, setServerError] = useState<string | null>(null);
@@ -65,7 +66,7 @@ function ServerSettings() {
         />
         <FormInput label="username" {...register('username')} />
         <FormInput type="password" label="Password" {...register('password')} />
-        <button type="submit">Submit</button>
+        <Button type="submit">Add</Button>
       </form>
     </div>
   );
