@@ -1,5 +1,6 @@
 import classnames from 'classnames';
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
+import useTorrents from 'renderer/hooks/useTorrents';
 import {
   getProgressBarColorFromStatus,
   getTorrentSubtitle,
@@ -14,21 +15,28 @@ interface Props {
 }
 
 function Torrent({ torrent }: Props) {
+  const { refetch } = useTorrents();
+  const [loading, setLoading] = useState(false);
   const isStopped = getIsStoppedStateFromStatus(torrent.status);
   const toggleTorrentState = useCallback(async () => {
+    setLoading(true);
     if (isStopped) {
-      await window.electron.transmission.startTorrents(torrent.id);
+      await window.electron.transmission.startTorrents([torrent.id]);
+      await refetch();
     } else {
-      await window.electron.transmission.stopTorrents(torrent.id);
+      await window.electron.transmission.stopTorrents([torrent.id]);
+      await refetch();
     }
-  }, [torrent.id, isStopped]);
+    setLoading(false);
+    console.log('Done toggling state');
+  }, [torrent.id, refetch, isStopped]);
 
   const onDeleteTorrent = useCallback(async () => {
-    await window.electron.transmission.deleteTorrents(torrent.id);
+    await window.electron.transmission.deleteTorrents([torrent.id]);
   }, [torrent.id]);
 
   return (
-    <div className={styles.container}>
+    <div className={classnames(styles.container, loading && styles.loading)}>
       <h2 className={styles.title}>{torrent.title}</h2>
       <h2 className={styles.subtitle}>{getTorrentSubtitle(torrent)}</h2>
       <div className={styles.progressBarContainer}>

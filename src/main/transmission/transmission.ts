@@ -98,7 +98,10 @@ ipcMain.handle(EVENT_LIST_TORRENTS, async () => {
 
 // Renderer Starts Torrents
 ipcMain.handle(EVENT_START_TORRENTS, async (_event, ids: string[]) => {
-  return transmission.start(ids);
+  await transmission.start(ids);
+  if (ids.length === 1) {
+    await transmission.waitForState(ids[0], 'DOWNLOAD');
+  }
 });
 
 ipcMain.handle(EVENT_DELETE_TORRENTS, async (_event, ids: string[]) => {
@@ -107,11 +110,8 @@ ipcMain.handle(EVENT_DELETE_TORRENTS, async (_event, ids: string[]) => {
 
 // Renderer Stops Torrent
 ipcMain.handle(EVENT_STOP_TORRENTS, async (_event, ids: string[]) => {
-  try {
-    return await transmission.stop(ids);
-  } catch (err) {
-    return 'UH OH';
-  }
+  await transmission.stop(ids);
+  await transmission.waitForState(ids[0], 'STOPPED');
 });
 
 // Renderer Stops Torrent

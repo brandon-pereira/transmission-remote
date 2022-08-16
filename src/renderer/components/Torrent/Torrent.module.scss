@@ -5,6 +5,10 @@
   &:nth-of-type(even) {
     background: #292b2e;
   }
+  &.loading {
+    opacity: 0.5;
+    cursor: wait;
+  }
 }
 
 .title {
@@ -60,6 +64,7 @@
 }
 
 .button {
+  cursor: inherit;
   font: inherit;
   height: 20px;
   width: 20px;

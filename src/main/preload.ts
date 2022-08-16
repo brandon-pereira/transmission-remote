@@ -47,16 +47,16 @@ const api = {
     async getTorrents(): Promise<ITorrent[]> {
       return ipcRenderer.invoke(EVENT_LIST_TORRENTS);
     },
-    async startTorrents(torrents: string | string[]): Promise<void> {
+    async startTorrents(torrents: string[]): Promise<void> {
       return ipcRenderer.invoke(EVENT_START_TORRENTS, torrents);
     },
-    async stopTorrents(torrents: string | string[]): Promise<void> {
+    async stopTorrents(torrents: string[]): Promise<void> {
       return ipcRenderer.invoke(EVENT_STOP_TORRENTS, torrents);
     },
     async addTorrentFromPath(filePath: string): Promise<void> {
       return ipcRenderer.invoke(EVENT_ADD_TORRENT_FROM_PATH, filePath);
     },
-    async deleteTorrents(torrents: string | string[]): Promise<void> {
+    async deleteTorrents(torrents: string[]): Promise<void> {
       return ipcRenderer.invoke(EVENT_DELETE_TORRENTS, torrents);
     },
     openFilePicker() {
