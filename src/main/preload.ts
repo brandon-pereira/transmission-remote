@@ -10,6 +10,7 @@ import {
   EVENT_OPEN_TORRENT_FILE_PICKER,
   EVENT_START_TORRENTS,
   EVENT_STOP_TORRENTS,
+  EVENT_DELETE_TORRENTS,
 } from './transmission/events';
 
 const api = {
@@ -54,6 +55,9 @@ const api = {
     },
     async addTorrentFromPath(filePath: string): Promise<void> {
       return ipcRenderer.invoke(EVENT_ADD_TORRENT_FROM_PATH, filePath);
+    },
+    async deleteTorrents(torrents: string | string[]): Promise<void> {
+      return ipcRenderer.invoke(EVENT_DELETE_TORRENTS, torrents);
     },
     openFilePicker() {
       ipcRenderer.send(EVENT_OPEN_TORRENT_FILE_PICKER);

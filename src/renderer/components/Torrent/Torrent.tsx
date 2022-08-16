@@ -23,6 +23,10 @@ function Torrent({ torrent }: Props) {
     }
   }, [torrent.id, isStopped]);
 
+  const onDeleteTorrent = useCallback(async () => {
+    await window.electron.transmission.deleteTorrents(torrent.id);
+  }, [torrent.id]);
+
   return (
     <div className={styles.container}>
       <h2 className={styles.title}>{torrent.title}</h2>

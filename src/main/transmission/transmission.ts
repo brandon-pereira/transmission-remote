@@ -9,6 +9,7 @@ import normalizeTorrent from './normalizeTorrent';
 import {
   EVENT_ADD_SERVER,
   EVENT_ADD_TORRENT_FROM_PATH,
+  EVENT_DELETE_TORRENTS,
   EVENT_LIST_SERVERS,
   EVENT_LIST_TORRENTS,
   EVENT_OPEN_TORRENT_FILE_PICKER,
@@ -98,6 +99,10 @@ ipcMain.handle(EVENT_LIST_TORRENTS, async () => {
 // Renderer Starts Torrents
 ipcMain.handle(EVENT_START_TORRENTS, async (_event, ids: string[]) => {
   return transmission.start(ids);
+});
+
+ipcMain.handle(EVENT_DELETE_TORRENTS, async (_event, ids: string[]) => {
+  return transmission.remove(ids, false);
 });
 
 // Renderer Stops Torrent
