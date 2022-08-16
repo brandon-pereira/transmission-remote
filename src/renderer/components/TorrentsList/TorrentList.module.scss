@@ -1,0 +1,28 @@
+.container {
+  display: contents;
+}
+
+.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.error {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+  span {
+    font-size: 100px;
+    filter: grayscale(1);
+  }
+  h3 {
+    margin: 3rem 0 1rem;
+  }
+  p {
+    margin: 0;
+  }
+}

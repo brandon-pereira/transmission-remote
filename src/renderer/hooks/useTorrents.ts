@@ -10,7 +10,7 @@ function useTorrents() {
   return {
     torrents,
     error,
-    loading: !torrents,
+    loading: !torrents && !error,
   };
 }
 
