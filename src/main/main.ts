@@ -164,5 +164,9 @@ ipcMain.on(EVENT_OPEN_SERVER_SETTINGS, () => {
     },
   });
 
+  settingsWindow.on('closed', () => {
+    settingsWindow = null;
+  });
+
   settingsWindow.loadURL(`${resolveHtmlPath('index.html')}#server-settings`);
 });
