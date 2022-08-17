@@ -9,6 +9,8 @@ import {
 } from 'renderer/utils/torrents';
 import type { ITorrent } from 'types/ITorrent';
 import styles from './Torrent.module.scss';
+import PlayIcon from '../Icons/PlayIcon';
+import PauseIcon from '../Icons/PauseIcon';
 
 interface Props {
   torrent: ITorrent;
@@ -54,7 +56,7 @@ function Torrent({ torrent }: Props) {
           type="button"
           onClick={toggleTorrentState}
         >
-          {isStopped ? '▶️' : '⏸'}
+          {isStopped ? <PlayIcon /> : <PauseIcon />}
         </button>
       </div>
       <h2 className={classnames(styles.subtitle, styles.tertiaryTitle)}>

@@ -1,4 +1,7 @@
+import classNames from 'classnames';
 import useServers from 'renderer/hooks/useServers';
+import AddFilesIcon from '../Icons/AddFilesIcon';
+import ServerIcon from '../Icons/ServerIcon';
 import styles from './Header.module.scss';
 
 function Header() {
@@ -11,12 +14,12 @@ function Header() {
         <button
           type="button"
           aria-label="Add Torrent"
-          className={styles.button}
+          className={classNames(styles.button, styles.iconButton)}
           onClick={() => {
             window.electron.transmission.openFilePicker();
           }}
         >
-          Add Torrent
+          <AddFilesIcon />
         </button>
         <button
           onClick={() => {
@@ -25,6 +28,7 @@ function Header() {
           type="button"
           className={styles.button}
         >
+          <ServerIcon />
           {activeServer?.host}:{activeServer?.port}
         </button>
       </div>
