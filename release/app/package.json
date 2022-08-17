@@ -1,6 +1,6 @@
 {
   "name": "transmission-remote",
-  "version": "0.0.2",
+  "version": "1.0.0-beta1",
   "description": "Modern remote Transmission torrent client",
   "main": "./dist/main/main.js",
   "author": {

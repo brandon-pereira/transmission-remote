@@ -32,7 +32,6 @@ if (!servers || !servers.length) {
 }
 // eslint-disable-next-line no-console
 console.log('Connecting to Transmission with Settings:', servers[0]);
-
 let transmission = new Transmission(servers[0]);
 
 export async function addTorrentFromPath(filePath: string) {

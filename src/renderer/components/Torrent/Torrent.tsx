@@ -30,9 +30,10 @@ function Torrent({ torrent }: Props) {
       await refetch();
     }
     setLoading(false);
-    console.log('Done toggling state');
   }, [torrent.id, refetch, isStopped]);
 
+  // @ts-expect-error coming soon
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const onDeleteTorrent = useCallback(async () => {
     await window.electron.transmission.deleteTorrents([torrent.id]);
   }, [torrent.id]);

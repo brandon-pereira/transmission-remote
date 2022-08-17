@@ -9,12 +9,7 @@ import Button from '../Forms/Button/Button';
 
 function ServerSettings() {
   const [serverError, setServerError] = useState<string | null>(null);
-  const {
-    register,
-    handleSubmit,
-    watch,
-    formState: { errors },
-  } = useForm<IServer>({
+  const { register, handleSubmit } = useForm<IServer>({
     defaultValues: {
       host: 'localhost',
       port: 9091,
@@ -22,13 +17,15 @@ function ServerSettings() {
   });
 
   const onSubmit = async (data: IServer) => {
+    // eslint-disable-next-line no-console
     console.log('final data', data);
     try {
       await window.electron.transmission.addServer(data);
+      // eslint-disable-next-line no-console
       console.log('ADDED');
     } catch (err) {
+      // eslint-disable-next-line no-console
       console.log('ERROR', err);
-      console.log(typeof err, Object.keys(err));
       setServerError((err as Error).toString());
     }
   };
