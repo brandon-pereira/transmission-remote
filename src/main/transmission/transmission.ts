@@ -99,7 +99,10 @@ ipcMain.handle(EVENT_LIST_TORRENTS, async () => {
 ipcMain.handle(EVENT_START_TORRENTS, async (_event, ids: string[]) => {
   await transmission.start(ids);
   if (ids.length === 1) {
-    await transmission.waitForState(ids[0], 'DOWNLOAD');
+    await Promise.race([
+      transmission.waitForState(ids[0], 'DOWNLOAD'),
+      transmission.waitForState(ids[0], 'SEED'),
+    ]);
   }
 });
 
