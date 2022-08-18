@@ -1,3 +1,13 @@
 .container {
   padding: 16px;
+  height: 100vh;
+  overflow-y: auto;
+
+  p {
+    color: #eeeeee;
+  }
+}
+
+.addButton {
+  margin: 16px 0;
 }

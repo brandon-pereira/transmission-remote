@@ -61,9 +61,11 @@ function ServerSettings() {
             valueAsNumber: true,
           })}
         />
-        <FormInput label="username" {...register('username')} />
+        <FormInput label="Username" {...register('username')} />
         <FormInput type="password" label="Password" {...register('password')} />
-        <Button type="submit">Add</Button>
+        <Button type="submit" className={styles.addButton}>
+          Add Remote
+        </Button>
       </form>
     </div>
   );
