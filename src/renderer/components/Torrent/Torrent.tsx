@@ -57,7 +57,7 @@ function Torrent({ torrent }: Props) {
           type="button"
           onClick={toggleTorrentState}
         >
-          {isStopped ? <PlayIcon /> : <PauseIcon />}
+          {isStopped ? <PlayIcon className={styles.playIcon} /> : <PauseIcon />}
         </button>
       </div>
       <h2 className={classnames(styles.subtitle, styles.tertiaryTitle)}>

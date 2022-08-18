@@ -9,6 +9,9 @@
     opacity: 0.5;
     cursor: wait;
   }
+  &.selected {
+    background: linear-gradient(#3059b0, #1b449b);
+  }
 }
 
 .title {
@@ -75,4 +78,9 @@
   background: rgba(0, 0, 0, 0.7);
   color: #fff;
   border: 1px solid rgba(0, 0, 0, 0.9);
+}
+
+.playIcon {
+  position: relative;
+  left: 1px;
 }
