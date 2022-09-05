@@ -8,16 +8,19 @@ import DropZone from './components/DropZone/DropZone';
 import Torrents from './components/TorrentsList/TorrentsList';
 import './utils/storage';
 import ServerSettings from './components/ServerSettings';
+import { Provider as SelectedTorrentProvider } from './hooks/useSelectedTorrents';
 
 function MainWindow() {
   return (
-    <div className={styles.container}>
-      <Header />
-      <DropZone>
-        <Torrents />
-      </DropZone>
-      <Footer />
-    </div>
+    <SelectedTorrentProvider>
+      <div className={styles.container}>
+        <Header />
+        <DropZone>
+          <Torrents />
+        </DropZone>
+        <Footer />
+      </div>
+    </SelectedTorrentProvider>
   );
 }
 

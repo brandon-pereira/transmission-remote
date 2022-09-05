@@ -56,8 +56,15 @@ const api = {
     async addTorrentFromPath(filePath: string): Promise<void> {
       return ipcRenderer.invoke(EVENT_ADD_TORRENT_FROM_PATH, filePath);
     },
-    async deleteTorrents(torrents: string[]): Promise<void> {
-      return ipcRenderer.invoke(EVENT_DELETE_TORRENTS, torrents);
+    async deleteTorrents(torrents: string[]): Promise<void | null> {
+      // eslint-disable-next-line no-restricted-globals, no-alert
+      const confirmation = confirm(
+        'Are you sure you want to delete the selected torrents?'
+      );
+      if (confirmation) {
+        return ipcRenderer.invoke(EVENT_DELETE_TORRENTS, torrents);
+      }
+      return null;
     },
     openFilePicker() {
       ipcRenderer.send(EVENT_OPEN_TORRENT_FILE_PICKER);

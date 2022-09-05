@@ -1,6 +1,7 @@
 import classnames from 'classnames';
 import { useCallback, useState } from 'react';
 import useTorrents from 'renderer/hooks/useTorrents';
+import useSelectedTorrents from 'renderer/hooks/useSelectedTorrents';
 import {
   getProgressBarColorFromStatus,
   getTorrentSubtitle,
@@ -18,6 +19,7 @@ interface Props {
 
 function Torrent({ torrent }: Props) {
   const { refetch } = useTorrents();
+  const [selectedItems, onSelectItem] = useSelectedTorrents();
   const [loading, setLoading] = useState(false);
   const isStopped = getIsStoppedStateFromStatus(torrent.status);
   const toggleTorrentState = useCallback(async () => {
@@ -39,7 +41,15 @@ function Torrent({ torrent }: Props) {
   }, [torrent.id]);
 
   return (
-    <div className={classnames(styles.container, loading && styles.loading)}>
+    // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
+    <div
+      onClick={(e) => onSelectItem(e, torrent.id)}
+      className={classnames(
+        styles.container,
+        loading && styles.loading,
+        selectedItems.includes(torrent.id) && styles.selected
+      )}
+    >
       <h2 className={styles.title}>{torrent.title}</h2>
       <h2 className={styles.subtitle}>{getTorrentSubtitle(torrent)}</h2>
       <div className={styles.progressBarContainer}>
