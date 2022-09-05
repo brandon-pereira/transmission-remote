@@ -83,16 +83,12 @@ ipcMain.handle(EVENT_LIST_SERVERS, async () => {
 
 // Renderer Requests Torrents List
 ipcMain.handle(EVENT_LIST_TORRENTS, async () => {
-  try {
-    const response = await transmission.all();
-    const torrents = response.torrents as ITorrent[];
-    if (!torrents || !Array.isArray(torrents)) {
-      return [];
-    }
-    return torrents.map(normalizeTorrent);
-  } catch (err) {
+  const response = await transmission.all();
+  const torrents = response.torrents as ITorrent[];
+  if (!torrents || !Array.isArray(torrents)) {
     return [];
   }
+  return torrents.map(normalizeTorrent);
 });
 
 // Renderer Starts Torrents
