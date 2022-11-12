@@ -18,7 +18,10 @@ import {
   EVENT_STOP_TORRENTS,
   STORE_REMOTES_SETTINGS,
 } from './events';
-import { createSettingsWindow } from '../windows/settingsWindow';
+import getSettingsWindow, {
+  createSettingsWindow,
+} from '../windows/settingsWindow';
+import getMainWindow from '../windows/mainWindow';
 
 export type ServerConfiguration = {
   host?: string;
@@ -70,6 +73,10 @@ ipcMain.handle(EVENT_ADD_SERVER, async (_event, server: IServer) => {
   await tempServer.sessionStats();
   store.set(STORE_REMOTES_SETTINGS, next);
   transmission = tempServer;
+  const settingsWindow = getSettingsWindow();
+  settingsWindow?.close();
+  const mainWindow = getMainWindow();
+  mainWindow?.focus();
 });
 
 ipcMain.handle(EVENT_LIST_SERVERS, async () => {
