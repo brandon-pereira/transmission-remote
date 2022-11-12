@@ -1,6 +1,5 @@
 import { BrowserWindow } from 'electron';
 import createWindow from '../utils/createWindow';
-import MenuBuilder from '../utils/menu';
 import getMainWindow from './mainWindow';
 
 let settingsWindow: BrowserWindow | null = null;

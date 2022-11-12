@@ -21,11 +21,10 @@ function ServerSettings() {
     // eslint-disable-next-line no-console
     console.log('final data', data);
     try {
-      console.log('Send');
       setConnecting(true);
       await window.electron.transmission.addServer(data);
-      // eslint-disable-next-line no-console
       setConnecting(false);
+      // eslint-disable-next-line no-console
       console.log('ADDED');
     } catch (err) {
       // eslint-disable-next-line no-console
