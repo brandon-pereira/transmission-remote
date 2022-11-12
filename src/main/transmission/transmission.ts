@@ -12,11 +12,13 @@ import {
   EVENT_DELETE_TORRENTS,
   EVENT_LIST_SERVERS,
   EVENT_LIST_TORRENTS,
+  EVENT_OPEN_SERVER_SETTINGS,
   EVENT_OPEN_TORRENT_FILE_PICKER,
   EVENT_START_TORRENTS,
   EVENT_STOP_TORRENTS,
   STORE_REMOTES_SETTINGS,
 } from './events';
+import { createSettingsWindow } from '../windows/settingsWindow';
 
 export type ServerConfiguration = {
   host?: string;
@@ -119,3 +121,7 @@ ipcMain.handle(
     return addTorrentFromPath(filePath);
   }
 );
+
+ipcMain.on(EVENT_OPEN_SERVER_SETTINGS, async () => {
+  return createSettingsWindow();
+});
