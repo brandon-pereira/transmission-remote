@@ -1,87 +1,36 @@
-/* eslint global-require: off, no-console: off, promise/always-return: off */
-
-/**
- * This module executes inside of electron's main process. You can start
- * electron renderer process from here and communicate with the other processes
- * through IPC.
- *
- * When running `npm run build` or `npm run build:main`, this file is compiled to
- * `./src/main.js` using webpack. This gives us some performance wins.
- */
 import path from 'path';
 import { app, BrowserWindow, shell, ipcMain } from 'electron';
-import { autoUpdater } from 'electron-updater';
-import log from 'electron-log';
 import MenuBuilder from './menu';
-import { resolveHtmlPath } from './util';
-import './store';
+import { resolveHtmlPath } from './utils/pathResolvers';
+import './utils/store';
 import './transmission/transmission';
 import { EVENT_OPEN_SERVER_SETTINGS } from './transmission/events';
-
-export default class AppUpdater {
-  constructor() {
-    log.transports.file.level = 'info';
-    autoUpdater.logger = log;
-    autoUpdater.checkForUpdatesAndNotify();
-  }
-}
+import AutoUpdater from './utils/autoUpdater';
+import config from './config';
+import createWindow from './utils/createWindow';
+import { create } from 'domain';
 
 let mainWindow: BrowserWindow | null = null;
+let settingsWindow: BrowserWindow | null = null;
 
-if (process.env.NODE_ENV === 'production') {
+if (config.isProduction) {
   const sourceMapSupport = require('source-map-support');
   sourceMapSupport.install();
 }
 
-const isDebug =
-  process.env.NODE_ENV === 'development' || process.env.DEBUG_PROD === 'true';
-
-if (isDebug) {
+if (config.isDebug) {
   require('electron-debug')();
 }
 
-const installExtensions = async () => {
-  const installer = require('electron-devtools-installer');
-  const forceDownload = !!process.env.UPGRADE_EXTENSIONS;
-  const extensions = ['REACT_DEVELOPER_TOOLS'];
-
-  return installer
-    .default(
-      extensions.map((name) => installer[name]),
-      forceDownload
-    )
-    .catch(console.log);
-};
-
-let settingsWindow: BrowserWindow | null = null;
-
-const createWindow = async () => {
-  if (isDebug) {
-    await installExtensions();
-  }
-
-  const RESOURCES_PATH = app.isPackaged
-    ? path.join(process.resourcesPath, 'assets')
-    : path.join(__dirname, '../../assets');
-
-  const getAssetPath = (...paths: string[]): string => {
-    return path.join(RESOURCES_PATH, ...paths);
-  };
-
-  mainWindow = new BrowserWindow({
-    show: false,
-    width: 500,
-    height: 728,
-    titleBarStyle: 'hiddenInset',
-    icon: getAssetPath('icon.png'),
-    webPreferences: {
-      preload: app.isPackaged
-        ? path.join(__dirname, 'preload.js')
-        : path.join(__dirname, '../../.erb/dll/preload.js'),
+async function initMainWindow() {
+  mainWindow = await createWindow({
+    windowOpts: {
+      show: false,
+      width: 500,
+      height: 728,
+      titleBarStyle: 'hiddenInset',
     },
   });
-
-  mainWindow.loadURL(`${resolveHtmlPath('index.html')}`);
 
   mainWindow.on('ready-to-show', () => {
     if (!mainWindow) {
@@ -100,31 +49,9 @@ const createWindow = async () => {
     settingsWindow = null;
   });
 
-  ipcMain.on('ondragstart', (event, filePath) => {
-    console.log();
-    event.sender.startDrag({
-      file: filePath,
-      icon: filePath,
-    });
-  });
-
   const menuBuilder = new MenuBuilder(mainWindow);
   menuBuilder.buildMenu();
-
-  // Open urls in the user's browser
-  mainWindow.webContents.setWindowOpenHandler((edata) => {
-    shell.openExternal(edata.url);
-    return { action: 'deny' };
-  });
-
-  // Remove this if your app does not use auto updates
-  // eslint-disable-next-line
-  new AppUpdater();
-};
-
-/**
- * Add event listeners...
- */
+}
 
 app.on('window-all-closed', () => {
   // Respect the OSX convention of having the application in memory even
@@ -137,36 +64,43 @@ app.on('window-all-closed', () => {
 app
   .whenReady()
   .then(() => {
-    createWindow();
+    initMainWindow();
 
     app.on('activate', () => {
       // On macOS it's common to re-create a window in the app when the
       // dock icon is clicked and there are no other windows open.
-      if (mainWindow === null) createWindow();
+      if (mainWindow === null) initMainWindow();
     });
   })
+  // eslint-disable-next-line no-console
   .catch(console.log);
 
-ipcMain.on(EVENT_OPEN_SERVER_SETTINGS, () => {
+ipcMain.on(EVENT_OPEN_SERVER_SETTINGS, async () => {
+  if (!mainWindow) {
+    return;
+  }
   if (settingsWindow) {
     settingsWindow.show();
     return;
   }
-  settingsWindow = new BrowserWindow({
-    width: 400,
-    height: 500,
-    resizable: false,
-    webPreferences: {
-      devTools: false,
-      preload: app.isPackaged
-        ? path.join(__dirname, 'preload.js')
-        : path.join(__dirname, '../../.erb/dll/preload.js'),
+  settingsWindow = await createWindow({
+    windowOpts: {
+      width: 400,
+      height: 600,
+      parent: mainWindow,
+      resizable: false,
     },
+    route: 'server-settings',
   });
 
   settingsWindow.on('closed', () => {
     settingsWindow = null;
   });
+});
 
-  settingsWindow.loadURL(`${resolveHtmlPath('index.html')}#server-settings`);
+ipcMain.on('ondragstart', (event, filePath) => {
+  event.sender.startDrag({
+    file: filePath,
+    icon: filePath,
+  });
 });

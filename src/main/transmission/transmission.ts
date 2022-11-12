@@ -4,7 +4,7 @@ import { readFile } from 'fs/promises';
 import { ITorrent } from '../../types/ITorrent';
 import { IServer, IServerHealth } from '../../types/IServer';
 
-import store from '../store';
+import store from '../utils/store';
 import normalizeTorrent from './normalizeTorrent';
 import {
   EVENT_ADD_SERVER,

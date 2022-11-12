@@ -1,7 +1,7 @@
 import { ipcMain } from 'electron';
 
 import Store from 'electron-store';
-import type { ServerConfiguration } from './transmission/transmission';
+import type { ServerConfiguration } from '../transmission/transmission';
 
 type StoreTypes = {
   'transmission-servers': ServerConfiguration[];
