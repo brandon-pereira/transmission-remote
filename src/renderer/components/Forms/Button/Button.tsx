@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import styles from './Button.module.scss';
 
 interface Props
@@ -8,9 +9,13 @@ interface Props
   children: React.ReactChild;
 }
 
-function Button({ children, ...buttonProps }: Props) {
+function Button({ children, className, ...buttonProps }: Props) {
   return (
-    <button type="button" {...buttonProps} className={styles.container}>
+    <button
+      type="button"
+      {...buttonProps}
+      className={classNames(className, styles.container)}
+    >
       {children}
     </button>
   );

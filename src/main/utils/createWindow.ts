@@ -35,7 +35,7 @@ async function createWindow({ route, windowOpts }: CreateWindowOpts) {
 
   const window = new BrowserWindow({
     webPreferences: {
-      devTools: false,
+      // devTools: false,
       preload: preloadPath,
     },
     icon: getAssetPath('icon.png'),
