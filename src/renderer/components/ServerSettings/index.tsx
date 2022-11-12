@@ -8,6 +8,7 @@ import FormError from '../Forms/Error/Error';
 import Button from '../Forms/Button/Button';
 
 function ServerSettings() {
+  const [connecting, setConnecting] = useState(false);
   const [serverError, setServerError] = useState<string | null>(null);
   const { register, handleSubmit } = useForm<IServer>({
     defaultValues: {
@@ -20,12 +21,16 @@ function ServerSettings() {
     // eslint-disable-next-line no-console
     console.log('final data', data);
     try {
+      console.log('Send');
+      setConnecting(true);
       await window.electron.transmission.addServer(data);
       // eslint-disable-next-line no-console
+      setConnecting(false);
       console.log('ADDED');
     } catch (err) {
       // eslint-disable-next-line no-console
       console.log('ERROR', err);
+      setConnecting(false);
       setServerError((err as Error).toString());
     }
   };
@@ -63,8 +68,12 @@ function ServerSettings() {
         />
         <FormInput label="Username" {...register('username')} />
         <FormInput type="password" label="Password" {...register('password')} />
-        <Button type="submit" className={styles.addButton}>
-          Add Remote
+        <Button
+          disabled={connecting}
+          type="submit"
+          className={styles.addButton}
+        >
+          {connecting ? 'Connecting...' : 'Add Remote'}
         </Button>
       </form>
     </div>

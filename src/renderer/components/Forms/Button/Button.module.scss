@@ -9,4 +9,8 @@
   padding: 10px 12px;
   border-radius: 8px;
   border: none;
+  &[disabled] {
+    pointer-events: none;
+    opacity: 0.5;
+  }
 }
