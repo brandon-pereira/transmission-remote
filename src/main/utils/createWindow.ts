@@ -54,16 +54,3 @@ async function createWindow({ route, windowOpts }: CreateWindowOpts) {
 }
 
 export default createWindow;
-
-//   const menuBuilder = new MenuBuilder(mainWindow);
-//   menuBuilder.buildMenu();
-
-//   // Open urls in the user's browser
-//   mainWindow.webContents.setWindowOpenHandler((edata) => {
-//     shell.openExternal(edata.url);
-//     return { action: 'deny' };
-//   });
-
-//   // Remove this if your app does not use auto updates
-//   new AutoUpdater();
-// };

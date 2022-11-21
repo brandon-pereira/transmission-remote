@@ -1,6 +1,5 @@
 import { BrowserWindow } from 'electron';
 import createWindow from '../utils/createWindow';
-import MenuBuilder from '../utils/menu';
 
 let mainWindow: BrowserWindow | null = null;
 
@@ -28,9 +27,6 @@ export async function createMainWindow() {
   mainWindow.on('closed', () => {
     mainWindow = null;
   });
-
-  const menuBuilder = new MenuBuilder(mainWindow);
-  menuBuilder.buildMenu();
 }
 
 export default function getMainWindow() {
