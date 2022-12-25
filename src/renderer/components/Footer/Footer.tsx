@@ -6,15 +6,25 @@ import TurtleIcon from '../Icons/TurtleIcon';
 import styles from './Footer.module.scss';
 
 function Footer() {
-  const { torrents } = useTorrents();
+  const { torrents, loading: torrentsLoading } = useTorrents();
   const { loading, error } = useSession();
   const [isActive, onToggleSpeedLimit] = useSpeedLimit();
 
-  if (loading) {
-    return <div className={styles.container}>Connecting...</div>;
+  if (loading || torrentsLoading) {
+    return (
+      <div className={styles.container}>
+        <div />
+        <div className={styles.text}>Connecting...</div>
+      </div>
+    );
   }
   if (error) {
-    return <div className={styles.container}>Error Connecting</div>;
+    return (
+      <div className={styles.container}>
+        <div />
+        <div className={styles.text}>Error Connecting to Server</div>
+      </div>
+    );
   }
   return (
     <div className={styles.container}>
