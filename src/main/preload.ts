@@ -47,10 +47,10 @@ const api = {
     async addServer(server: IServer): Promise<IServer[]> {
       return ipcRenderer.invoke(EVENT_ADD_SERVER, server);
     },
-    async getSession(): Promise<Session> {
+    async getSession(): Promise<Partial<Session>> {
       return ipcRenderer.invoke(EVENT_GET_SESSION);
     },
-    async setSession(session: Session): Promise<Session> {
+    async setSession(session: Partial<Session>): Promise<Session> {
       return ipcRenderer.invoke(EVENT_SET_SESSION, session);
     },
     async getTorrents(): Promise<ITorrent[]> {
