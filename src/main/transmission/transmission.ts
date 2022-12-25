@@ -10,10 +10,12 @@ import {
   EVENT_ADD_SERVER,
   EVENT_ADD_TORRENT_FROM_PATH,
   EVENT_DELETE_TORRENTS,
+  EVENT_GET_SESSION,
   EVENT_LIST_SERVERS,
   EVENT_LIST_TORRENTS,
   EVENT_OPEN_SERVER_SETTINGS,
   EVENT_OPEN_TORRENT_FILE_PICKER,
+  EVENT_SET_SESSION,
   EVENT_START_TORRENTS,
   EVENT_STOP_TORRENTS,
   STORE_REMOTES_SETTINGS,
@@ -128,6 +130,19 @@ ipcMain.handle(
     return addTorrentFromPath(filePath);
   }
 );
+
+// Renderer Toggles Speed Limit
+ipcMain.handle(EVENT_SET_SESSION, async (_event, session: Session) => {
+  transmission.session({
+    ...session,
+  });
+});
+
+// Renderer Toggles Speed Limit
+ipcMain.handle(EVENT_GET_SESSION, async () => {
+  // @ts-expect-error this library has bad typings.. this is the getter
+  return transmission.session();
+});
 
 ipcMain.on(EVENT_OPEN_SERVER_SETTINGS, async () => {
   return createSettingsWindow();

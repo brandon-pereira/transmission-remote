@@ -3,4 +3,21 @@
   color: var(--colors-app-shell-color);
   padding: 1rem;
   text-align: center;
+  display: grid;
+  grid-template-columns: 2rem 1fr 2rem;
+  align-items: center;
+}
+
+.speedLimitIcon {
+  cursor: pointer;
+  width: 100%;
+}
+.active {
+  color: #2b6ec8;
+}
+.text {
+  padding: 0 1rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
