@@ -1,9 +1,9 @@
 import { app, dialog, ipcMain } from 'electron';
 import Transmission from 'transmission-promise';
 import { readFile } from 'fs/promises';
-import { ITorrent } from '../../types/ITorrent';
-import { IServer, IServerHealth } from '../../types/IServer';
-
+import { ITorrent } from 'types/ITorrent';
+import { IServer, IServerHealth } from 'types/IServer';
+import { Session } from 'types/ISession';
 import store from '../utils/store';
 import normalizeTorrent from './normalizeTorrent';
 import {
