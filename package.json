@@ -1,5 +1,6 @@
 {
   "name": "transmission-remote",
+  "version": "1.0.0-beta4",
   "description": "Modern remote Transmission torrent client",
   "scripts": {
     "build": "concurrently \"npm run build:main\" \"npm run build:renderer\"",
@@ -14,6 +15,7 @@
     "start:preload": "cross-env NODE_ENV=development TS_NODE_TRANSPILE_ONLY=true webpack --config ./.erb/configs/webpack.config.preload.dev.ts",
     "start:renderer": "cross-env NODE_ENV=development TS_NODE_TRANSPILE_ONLY=true webpack serve --config ./.erb/configs/webpack.config.renderer.dev.ts",
     "test": "jest",
+    "postversion": "ts-node ./.erb/scripts/sync-version.ts",
     "prepare": "husky install"
   },
   "lint-staged": {
