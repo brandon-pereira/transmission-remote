@@ -14,6 +14,8 @@ import {
   EVENT_DELETE_TORRENTS,
   EVENT_GET_SESSION,
   EVENT_SET_SESSION,
+  EVENT_GET_TORRENT,
+  EVENT_OPEN_TORRENT_SETTINGS,
 } from './transmission/events';
 
 const api = {
@@ -56,6 +58,9 @@ const api = {
     async getTorrents(): Promise<ITorrent[]> {
       return ipcRenderer.invoke(EVENT_LIST_TORRENTS);
     },
+    async getTorrent(id: string): Promise<ITorrent> {
+      return ipcRenderer.invoke(EVENT_GET_TORRENT, id);
+    },
     async startTorrents(torrents: string[]): Promise<void> {
       return ipcRenderer.invoke(EVENT_START_TORRENTS, torrents);
     },
@@ -80,6 +85,9 @@ const api = {
     },
     openServerSettings() {
       ipcRenderer.send(EVENT_OPEN_SERVER_SETTINGS);
+    },
+    openTorrentSettings(id: string) {
+      ipcRenderer.send(EVENT_OPEN_TORRENT_SETTINGS, id);
     },
   },
   store: {

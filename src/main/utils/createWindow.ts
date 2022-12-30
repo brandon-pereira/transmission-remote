@@ -28,6 +28,10 @@ const getAssetPath = (...paths: string[]): string => {
   return path.join(resourcePath, ...paths);
 };
 
+export function navigate(window: BrowserWindow, route?: string) {
+  window.loadURL(`${resolveHtmlPath('index.html')}#${route || ''}`);
+}
+
 async function createWindow({ route, windowOpts }: CreateWindowOpts) {
   if (isDebug) {
     await installExtensions();
@@ -42,7 +46,7 @@ async function createWindow({ route, windowOpts }: CreateWindowOpts) {
     ...windowOpts,
   });
 
-  window.loadURL(`${resolveHtmlPath('index.html')}#${route}`);
+  navigate(window, route);
 
   // Open urls in the user's browser
   window.webContents.setWindowOpenHandler((edata) => {

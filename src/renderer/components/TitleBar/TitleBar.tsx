@@ -2,11 +2,12 @@ import classNames from 'classnames';
 import styles from './TitleBar.module.scss';
 
 interface Props {
+  title?: string;
   leftButtons?: React.ReactNode;
   rightButtons?: React.ReactNode;
 }
 
-function TitleBar({ leftButtons, rightButtons }: Props) {
+function TitleBar({ title, leftButtons, rightButtons }: Props) {
   const showButtons = Boolean(leftButtons || rightButtons);
 
   return (
@@ -16,7 +17,7 @@ function TitleBar({ leftButtons, rightButtons }: Props) {
         showButtons && styles.showButtons
       )}
     >
-      <h1 className={styles.title}>Transmission Remote</h1>
+      <h1 className={styles.title}>{title || 'Transmission Remote'}</h1>
       {showButtons && (
         <div className={styles.buttons}>
           <div className={styles.leftButtons}>{leftButtons}</div>

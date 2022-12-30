@@ -43,7 +43,12 @@ function Torrent({ torrent }: Props) {
   return (
     // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
     <div
-      onClick={(e) => onSelectItem(e, torrent.id)}
+      onDoubleClick={() => {
+        window.electron.transmission.openTorrentSettings(torrent.id);
+      }}
+      onClick={(e) => {
+        onSelectItem(e, torrent.id);
+      }}
       className={classnames(
         styles.container,
         loading && styles.loading,

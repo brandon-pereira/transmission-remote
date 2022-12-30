@@ -11,10 +11,12 @@ import {
   EVENT_ADD_TORRENT_FROM_PATH,
   EVENT_DELETE_TORRENTS,
   EVENT_GET_SESSION,
+  EVENT_GET_TORRENT,
   EVENT_LIST_SERVERS,
   EVENT_LIST_TORRENTS,
   EVENT_OPEN_SERVER_SETTINGS,
   EVENT_OPEN_TORRENT_FILE_PICKER,
+  EVENT_OPEN_TORRENT_SETTINGS,
   EVENT_SET_SESSION,
   EVENT_START_TORRENTS,
   EVENT_STOP_TORRENTS,
@@ -23,6 +25,7 @@ import {
 import getSettingsWindow, {
   createSettingsWindow,
 } from '../windows/settingsWindow';
+import { createTorrentSettingsWindow } from '../windows/torrentSettingsWindow';
 import getMainWindow from '../windows/mainWindow';
 
 export type ServerConfiguration = {
@@ -102,6 +105,16 @@ ipcMain.handle(EVENT_LIST_TORRENTS, async () => {
   return torrents.map(normalizeTorrent);
 });
 
+// Torrent Details
+ipcMain.handle(EVENT_GET_TORRENT, async (_event, id: string) => {
+  const response = await transmission.get([Number(id)]);
+  const torrents = response.torrents as ITorrent[];
+  if (!torrents || !Array.isArray(torrents) || !torrents.length) {
+    throw new Error('Invalid Torrent Provided or Server Offline');
+  }
+  return normalizeTorrent(torrents[0]);
+});
+
 // Renderer Starts Torrents
 ipcMain.handle(EVENT_START_TORRENTS, async (_event, ids: string[]) => {
   await transmission.start(ids);
@@ -146,4 +159,8 @@ ipcMain.handle(EVENT_GET_SESSION, async () => {
 
 ipcMain.on(EVENT_OPEN_SERVER_SETTINGS, async () => {
   return createSettingsWindow();
+});
+
+ipcMain.on(EVENT_OPEN_TORRENT_SETTINGS, async (_event, id: string) => {
+  return createTorrentSettingsWindow(id);
 });
