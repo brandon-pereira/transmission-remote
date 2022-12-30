@@ -45,3 +45,12 @@ npm run package
 ```bash
  xattr -cr /Applications/Transmission\ Remote.app
 ```
+
+## Releasing
+
+```bash
+1. npm version patch # or equivalent
+2. git push --all
+3. create a **draft** release
+4. re-run the publish cmd
+```
