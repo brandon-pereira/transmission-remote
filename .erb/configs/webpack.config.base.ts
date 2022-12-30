@@ -4,6 +4,8 @@
 
 import webpack from 'webpack';
 import webpackPaths from './webpack.paths';
+import { TsconfigPathsPlugin } from 'tsconfig-paths-webpack-plugin';
+
 import { dependencies as externals } from '../../release/app/package.json';
 
 const configuration: webpack.Configuration = {
@@ -47,6 +49,7 @@ const configuration: webpack.Configuration = {
     new webpack.EnvironmentPlugin({
       NODE_ENV: 'production',
     }),
+    new TsconfigPathsPlugin(),
   ],
 };
 
