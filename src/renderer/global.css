@@ -1,15 +1,21 @@
 :root {
+  --fonts-primary: 'Source Sans Pro', sans-serif;
   --colors-app-shell-background: linear-gradient(#fdfdfd, #dbdbdb);
   --colors-app-shell-color: #000;
-  --colors-core-background: #202225;
-  --colors-core-color: #aaaaaa;
+  --colors-core-background: #fff;
+  --colors-buttons-background: #fff;
+  --colors-text-primary: #272727;
+  --colors-text-secondary: #5a5a5a;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     --colors-app-shell-background: linear-gradient(#45464a, #343538);
     --colors-app-shell-color: #bfc0c3;
-    --fonts-primary: 'Source Sans Pro', sans-serif;
+    --colors-core-background: #202225;
+    --colors-buttons-background: #67686b;
+    --colors-text-primary: #dedfdf;
+    --colors-text-secondary: #9a9b9d;
   }
 }
 
@@ -19,7 +25,7 @@ body {
   height: 100vh;
   margin: 0;
   background: var(--colors-core-background);
-  color: var(--colors-core-color);
+  color: var(--colors-text-primary);
   user-select: none;
 }
 

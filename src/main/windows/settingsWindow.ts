@@ -16,7 +16,7 @@ export async function createSettingsWindow() {
   settingsWindow = await createWindow({
     windowOpts: {
       width: 400,
-      height: 600,
+      height: 625,
       parent: mainWindow,
       resizable: false,
     },

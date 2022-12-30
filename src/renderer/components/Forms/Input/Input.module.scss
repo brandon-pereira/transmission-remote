@@ -5,16 +5,18 @@
 
 .label {
   display: block;
+  color: var(--colors-text-primary);
   margin-bottom: 6px;
 }
 
 .input {
   box-sizing: border-box;
-  background: #fff;
+  background: var(--colors-core-background);
+  border: 1px solid var(--colors-text-primary);
+  color: var(--colors-text-primary);
   border-radius: 5px;
-  border: none;
   width: 100%;
   font-family: var(--fonts-primary);
   font-size: 16px;
-  padding: 12px 4px;
+  padding: 12px 12px;
 }
