@@ -49,8 +49,7 @@ npm run package
 ## Releasing
 
 ```bash
-1. npm version patch # or equivalent
-2. git push --all
-3. create a **draft** release
-4. re-run the publish cmd
+1. yarn version --new-version 1.0.0-beta1 # or equivalent
+2. create a **draft** release
+3. re-run the publish cmd
 ```
