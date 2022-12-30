@@ -3,9 +3,9 @@ import { useForm } from 'react-hook-form';
 import { IServer } from 'types/IServer';
 
 import styles from './ServerSettings.module.scss';
-import FormInput from '../Forms/Input/Input';
-import FormError from '../Forms/Error/Error';
-import Button from '../Forms/Button/Button';
+import FormInput from '../../components/Forms/Input/Input';
+import FormError from '../../components/Forms/Error/Error';
+import Button from '../../components/Forms/Button/Button';
 
 function ServerSettings() {
   const [connecting, setConnecting] = useState(false);

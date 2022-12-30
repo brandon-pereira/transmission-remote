@@ -1,55 +1,51 @@
-import classNames from 'classnames';
 import useSelectedTorrents from 'renderer/hooks/useSelectedTorrents';
 import useServers from 'renderer/hooks/useServers';
-import AddFilesIcon from '../Icons/AddFilesIcon';
-import RemoveIcon from '../Icons/RemoveIcon';
-import ServerIcon from '../Icons/ServerIcon';
-import styles from './Header.module.scss';
+import Button from '../../components/Button/Button';
+import AddFilesIcon from '../../components/Icons/AddFilesIcon';
+import RemoveIcon from '../../components/Icons/RemoveIcon';
+import ServerIcon from '../../components/Icons/ServerIcon';
+import TitleBar from '../../components/TitleBar/TitleBar';
 
 function Header() {
   const [selectedItems] = useSelectedTorrents();
   const { activeServer } = useServers();
 
   return (
-    <div className={styles.container}>
-      <h1 className={styles.title}>Transmission Remote</h1>
-      <div className={styles.buttons}>
-        <div className={styles.leftButtons}>
-          <button
+    <TitleBar
+      leftButtons={
+        <>
+          <Button
             type="button"
             aria-label="Add Torrent"
-            className={classNames(styles.button, styles.iconButton)}
             onClick={() => {
               window.electron.transmission.openFilePicker();
             }}
-          >
-            <AddFilesIcon />
-          </button>
+            icon={<AddFilesIcon />}
+          />
           {Boolean(selectedItems.length) && (
-            <button
+            <Button
               type="button"
               aria-label="Delete Torrents"
-              className={classNames(styles.button, styles.iconButton)}
+              icon={<RemoveIcon />}
               onClick={() => {
                 window.electron.transmission.deleteTorrents(selectedItems);
               }}
-            >
-              <RemoveIcon />
-            </button>
+            />
           )}
-        </div>
-        <button
+        </>
+      }
+      rightButtons={
+        <Button
           onClick={() => {
             window.electron.transmission.openServerSettings();
           }}
           type="button"
-          className={styles.button}
+          icon={<ServerIcon />}
         >
-          <ServerIcon />
           {activeServer?.host}:{activeServer?.port}
-        </button>
-      </div>
-    </div>
+        </Button>
+      }
+    />
   );
 }
 

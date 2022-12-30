@@ -9,6 +9,7 @@ module.exports = {
     'react/jsx-props-no-spreading': 'off',
     'react/prop-types': 'off',
     'react/require-default-props': 'off',
+    'react/button-has-type': 'off',
   },
   parserOptions: {
     ecmaVersion: 2020,

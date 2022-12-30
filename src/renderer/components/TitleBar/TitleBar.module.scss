@@ -1,0 +1,33 @@
+.container {
+  -webkit-app-region: drag;
+  padding: 42px 10px 0;
+  position: relative;
+  background: var(--colors-app-shell-background);
+  color: var(--colors-app-shell-color);
+  &.showButtons {
+    padding-bottom: 10px;
+  }
+}
+
+.title {
+  position: absolute;
+  top: 10px;
+  text-align: center;
+  left: 0;
+  right: 0;
+  margin: 0;
+  font-size: 16px;
+  font-weight: 400;
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.leftButtons {
+  display: flex;
+  .button {
+    margin-right: 0.4rem;
+  }
+}
