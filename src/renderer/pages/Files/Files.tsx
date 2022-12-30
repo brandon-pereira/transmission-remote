@@ -5,7 +5,7 @@ import useTorrent from 'renderer/hooks/useTorrent';
 function Files() {
   const { fileId } = useParams();
 
-  const { torrent, loading, error } = useTorrent(fileId);
+  const { torrent } = useTorrent(fileId);
 
   return (
     <div>
