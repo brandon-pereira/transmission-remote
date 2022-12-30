@@ -3,6 +3,7 @@ import './utils/store';
 import './transmission/transmission';
 import config from './config';
 import getMainWindow, { createMainWindow } from './windows/mainWindow';
+import MenuBuilder from './utils/menu';
 
 if (config.isProduction) {
   const sourceMapSupport = require('source-map-support');
@@ -23,8 +24,14 @@ app.on('window-all-closed', () => {
 
 app
   .whenReady()
-  .then(() => {
-    createMainWindow();
+  .then(async () => {
+    await createMainWindow();
+    const window = getMainWindow();
+    if (window) {
+      // eslint-disable-next-line no-new
+      const builder = new MenuBuilder(window);
+      builder.buildMenu();
+    }
     app.on('activate', () => {
       // On macOS it's common to re-create a window in the app when the
       // dock icon is clicked and there are no other windows open.
