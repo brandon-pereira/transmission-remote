@@ -31,3 +31,4 @@ jobs:
           npm run package
           npm run lint
           npm test
+          npm run build
