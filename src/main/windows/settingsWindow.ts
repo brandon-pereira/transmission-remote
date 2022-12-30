@@ -19,6 +19,7 @@ export async function createSettingsWindow() {
       height: 625,
       parent: mainWindow,
       resizable: false,
+      titleBarStyle: 'hiddenInset',
     },
     route: 'server-settings',
   });
