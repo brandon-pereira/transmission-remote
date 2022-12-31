@@ -50,6 +50,7 @@ npm run package
 
 ```bash
 1. Publish previous draft release
-2. create a new **draft** release
-3. yarn version --new-version 1.0.0-beta1 # or equivalent
+2. yarn version --new-version 1.0.0-beta1 # or equivalent
+3. create a new **draft** release
+4. re-run publish script
 ```
