@@ -1,6 +1,6 @@
 {
   "name": "transmission-remote",
-  "version": "1.0.0-beta6",
+  "version": "1.0.0-beta7",
   "description": "Modern remote Transmission torrent client",
   "scripts": {
     "build": "concurrently \"npm run build:main\" \"npm run build:renderer\"",
