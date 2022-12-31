@@ -5,16 +5,12 @@ import {
   shell,
 } from 'electron';
 import path from 'path';
-import installExtensions from './installExtensions';
 import { resolveHtmlPath } from './pathResolvers';
 
 interface CreateWindowOpts {
   route?: string;
   windowOpts: BrowserWindowConstructorOptions;
 }
-
-const isDebug =
-  process.env.NODE_ENV === 'development' || process.env.DEBUG_PROD === 'true';
 
 const resourcePath = app.isPackaged
   ? path.join(process.resourcesPath, 'assets')
@@ -33,9 +29,9 @@ export function navigate(window: BrowserWindow, route?: string) {
 }
 
 async function createWindow({ route, windowOpts }: CreateWindowOpts) {
-  if (isDebug) {
-    await installExtensions();
-  }
+  // if (config.isDebug) {
+  //   await installExtensions();
+  // }
 
   const window = new BrowserWindow({
     webPreferences: {
