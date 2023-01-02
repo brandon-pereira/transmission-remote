@@ -3,6 +3,7 @@ import TitleBar from 'renderer/components/TitleBar/TitleBar';
 import Loader from 'renderer/components/Loader/Loader';
 import useTorrent from 'renderer/hooks/useTorrent';
 import Section from 'renderer/components/Section/Section';
+import SectionListItem from 'renderer/components/Section/SectionListItem';
 import styles from './TorrentSettings.module.scss';
 
 function TorrentSettings() {
@@ -37,7 +38,17 @@ function TorrentSettings() {
       <div className={styles.container}>
         <Section>
           {torrent.files.map((file) => (
-            <div key={file.title}>{file.title}</div>
+            <SectionListItem
+              key={file.title}
+              title={file.title}
+              rightContent={
+                <>
+                  {'[<][.][>]'}
+                  <input type="checkbox" checked={file.wanted} readOnly />
+                </>
+              }
+            />
+            // <div key={file.title}>{file.title}</div>
           ))}
         </Section>
       </div>

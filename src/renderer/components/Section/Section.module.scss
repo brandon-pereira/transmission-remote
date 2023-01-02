@@ -17,3 +17,23 @@
 .noPadding {
   padding: 0;
 }
+
+.listItem {
+  box-sizing: border-box;
+  margin: 0 -12px 0 -12px;
+  padding: 12px 18px;
+  border-bottom: 1px solid var(--colors-divider);
+  position: relative;
+  display: flex;
+  align-items: center;
+  &:first-of-type {
+    margin-top: -12px;
+  }
+  &:last-of-type {
+    margin-bottom: -12px;
+  }
+}
+
+.listItemLeftContent {
+  flex: 1;
+}

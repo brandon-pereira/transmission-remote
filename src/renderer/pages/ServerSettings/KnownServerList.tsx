@@ -1,5 +1,6 @@
 import Button from 'renderer/components/Button/Button';
 import Section from 'renderer/components/Section/Section';
+import SectionListItem from 'renderer/components/Section/SectionListItem';
 import useServers from 'renderer/hooks/useServers';
 import styles from './ServerSettings.module.scss';
 
@@ -12,21 +13,22 @@ function KnownServerList() {
     </Section>;
   }
   return (
-    <Section label="Known Servers" noPadding>
+    <Section label="Known Servers">
       {servers?.map((s) => (
-        <div className={styles.serverListOption} key={s.id}>
-          <div>
-            {s.host}:{s.port}
-          </div>
-          <Button
-            className={styles.serverListOptionButton}
-            onClick={() => {
-              window.electron.servers.setServer(s.id);
-            }}
-          >
-            Connect
-          </Button>
-        </div>
+        <SectionListItem
+          title={`${s.host}:${s.port}`}
+          key={s.id}
+          rightContent={
+            <Button
+              className={styles.serverListOptionButton}
+              onClick={() => {
+                window.electron.servers.setServer(s.id);
+              }}
+            >
+              Connect
+            </Button>
+          }
+        />
       ))}
     </Section>
   );
