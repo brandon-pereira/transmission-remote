@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import useSWR from 'swr';
 
-const fetcher = () => window.electron.transmission.getServers();
+const fetcher = () => window.electron.servers.getServers();
 
 function useServers() {
   const { data: servers, error } = useSWR('servers', fetcher, {

@@ -26,7 +26,7 @@ function ServerSettings() {
     console.log('final data', data);
     try {
       setConnecting(true);
-      await window.electron.transmission.addServer(data);
+      await window.electron.servers.addServer(data);
       setConnecting(false);
       // eslint-disable-next-line no-console
       console.log('ADDED');

@@ -37,7 +37,7 @@ function Header() {
       rightButtons={
         <Button
           onClick={() => {
-            window.electron.transmission.openServerSettings();
+            window.electron.servers.openServerSettings();
           }}
           type="button"
           icon={<ServerIcon />}

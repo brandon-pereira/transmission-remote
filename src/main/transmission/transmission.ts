@@ -141,7 +141,6 @@ ipcMain.handle(EVENT_SET_SESSION, async (_event, session: Session) => {
   });
 });
 
-// Renderer Toggles Speed Limit
 ipcMain.handle(EVENT_GET_SESSION, async () => {
   // @ts-expect-error this library has bad typings.. this is the getter
   return transmission().session();

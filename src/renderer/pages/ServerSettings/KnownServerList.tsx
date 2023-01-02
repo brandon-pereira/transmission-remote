@@ -21,7 +21,7 @@ function KnownServerList() {
           <Button
             className={styles.serverListOptionButton}
             onClick={() => {
-              window.electron.transmission.setServer(s.id);
+              window.electron.servers.setServer(s.id);
             }}
           >
             Connect

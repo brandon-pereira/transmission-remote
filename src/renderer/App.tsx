@@ -6,7 +6,6 @@ import {
   Navigate,
 } from 'react-router-dom';
 
-import './utils/storage';
 import ServerSettings from './pages/ServerSettings/ServerSettings';
 import MainWindow from './pages/MainWindow/MainWindow';
 import Files from './pages/Files/Files';

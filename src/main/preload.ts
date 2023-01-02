@@ -1,13 +1,9 @@
-import { IServer, IServerHealth } from 'types/IServer';
-import { contextBridge, ipcRenderer, IpcRendererEvent } from 'electron';
+import { contextBridge, ipcRenderer } from 'electron';
 import { ITorrent } from 'types/ITorrent';
 import { Session } from 'types/ISession';
 import {
-  EVENT_ADD_SERVER,
   EVENT_ADD_TORRENT_FROM_PATH,
-  EVENT_LIST_SERVERS,
   EVENT_LIST_TORRENTS,
-  EVENT_OPEN_SERVER_SETTINGS,
   EVENT_OPEN_TORRENT_FILE_PICKER,
   EVENT_START_TORRENTS,
   EVENT_STOP_TORRENTS,
@@ -16,8 +12,8 @@ import {
   EVENT_SET_SESSION,
   EVENT_GET_TORRENT,
   EVENT_OPEN_TORRENT_SETTINGS,
-  EVENT_SET_SERVER,
 } from './transmission/events';
+import servers from './preload/servers';
 
 const api = {
   // ipcRenderer: {
@@ -35,21 +31,8 @@ const api = {
   //     ipcRenderer.once(channel, (_event, ...args) => func(...args));
   //   },
   // },
+  servers,
   transmission: {
-    onServerHealthChange(cb: (health: IServerHealth) => void) {
-      const subscription = (_event: IpcRendererEvent, health: IServerHealth) =>
-        cb(health);
-      ipcRenderer.on('transmission-remote-health', subscription);
-      return () => {
-        ipcRenderer.removeListener('transmission-remote-health', subscription);
-      };
-    },
-    async getServers(): Promise<IServer[]> {
-      return ipcRenderer.invoke(EVENT_LIST_SERVERS);
-    },
-    async addServer(server: IServer): Promise<IServer[]> {
-      return ipcRenderer.invoke(EVENT_ADD_SERVER, server);
-    },
     async getSession(): Promise<Partial<Session>> {
       return ipcRenderer.invoke(EVENT_GET_SESSION);
     },
@@ -81,25 +64,11 @@ const api = {
       }
       return null;
     },
-    setServer(serverId: string): Promise<void> {
-      return ipcRenderer.invoke(EVENT_SET_SERVER, serverId);
-    },
     openFilePicker() {
       ipcRenderer.send(EVENT_OPEN_TORRENT_FILE_PICKER);
     },
-    openServerSettings() {
-      ipcRenderer.send(EVENT_OPEN_SERVER_SETTINGS);
-    },
     openTorrentSettings(id: string) {
       ipcRenderer.send(EVENT_OPEN_TORRENT_SETTINGS, id);
-    },
-  },
-  store: {
-    get(val: string) {
-      return ipcRenderer.sendSync('electron-store-get', val);
-    },
-    set(property: string, val: unknown) {
-      ipcRenderer.send('electron-store-set', property, val);
     },
   },
 };
