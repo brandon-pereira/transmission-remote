@@ -2,7 +2,7 @@ import { app, dialog, ipcMain } from 'electron';
 import { readFile } from 'fs/promises';
 import { ITorrent } from 'types/ITorrent';
 import { Session } from 'types/ISession';
-import normalizeTorrent from './normalizeTorrent';
+import normalizeTorrent from '../utils/normalizeTorrent';
 import {
   EVENT_ADD_TORRENT_FROM_PATH,
   EVENT_DELETE_TORRENTS,
