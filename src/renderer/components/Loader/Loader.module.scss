@@ -18,7 +18,7 @@
   width: 6px;
   height: 18px;
   border-radius: 20%;
-  background: #fff;
+  background: #000;
 }
 .spinner div:nth-child(1) {
   transform: rotate(0deg);
@@ -74,5 +74,11 @@
   }
   100% {
     opacity: 0;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .spinner div:after {
+    background: #fff;
   }
 }
