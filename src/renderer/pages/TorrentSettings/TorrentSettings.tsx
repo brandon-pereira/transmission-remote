@@ -6,9 +6,9 @@ import Section from 'renderer/components/Section/Section';
 import styles from './TorrentSettings.module.scss';
 
 function TorrentSettings() {
-  const { fileId } = useParams();
+  const { torrentId } = useParams();
 
-  const { torrent, error, loading } = useTorrent(fileId);
+  const { torrent, error, loading } = useTorrent(torrentId);
 
   if (loading) {
     return (

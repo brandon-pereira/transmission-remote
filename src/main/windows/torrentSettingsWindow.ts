@@ -10,7 +10,7 @@ export async function createTorrentSettingsWindow(id: string) {
     return;
   }
   if (torrentSettingsWindow) {
-    navigate(torrentSettingsWindow, `files/${id}`);
+    navigate(torrentSettingsWindow, `torrent-settings/${id}`);
     return;
   }
   torrentSettingsWindow = await createWindow({
@@ -20,7 +20,7 @@ export async function createTorrentSettingsWindow(id: string) {
       parent: mainWindow,
       titleBarStyle: 'hiddenInset',
     },
-    route: `files/${id}`,
+    route: `torrent-settings/${id}`,
   });
 
   torrentSettingsWindow.on('closed', () => {

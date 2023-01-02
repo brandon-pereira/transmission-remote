@@ -22,7 +22,10 @@ export default function App() {
       <Routes>
         <Route path="/home" element={<MainWindow />} />
         <Route path="/server-settings" element={<ServerSettings />} />
-        <Route path="/files/:fileId" element={<TorrentSettings />} />
+        <Route
+          path="/torrent-settings/:torrentId"
+          element={<TorrentSettings />}
+        />
         <Route path="*" element={<Navigate to="/home" />} />
       </Routes>
     </Router>
