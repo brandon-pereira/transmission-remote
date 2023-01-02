@@ -12,7 +12,7 @@ import {
   EVENT_SET_SESSION,
   EVENT_GET_TORRENT,
   EVENT_OPEN_TORRENT_SETTINGS,
-} from '../transmission/events';
+} from '../events';
 
 export default {
   async getSession(): Promise<Partial<Session>> {

@@ -2,7 +2,7 @@
 import store from 'main/utils/store';
 import Transmission from 'transmission-promise';
 import { IServerConfiguration } from 'types/IServer';
-import { STORE_REMOTES_SETTINGS } from './events';
+import { STORE_REMOTES_SETTINGS } from '../events';
 
 class ServerManager {
   activeServer: IServerConfiguration;

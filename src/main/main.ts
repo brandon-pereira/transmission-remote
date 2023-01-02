@@ -1,6 +1,7 @@
 import { app, ipcMain } from 'electron';
 import './utils/store';
 import './transmission/transmission';
+import './controllers/servers';
 import config from './config';
 import getMainWindow, { createMainWindow } from './windows/mainWindow';
 import MenuBuilder from './utils/menu';

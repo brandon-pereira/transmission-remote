@@ -5,7 +5,7 @@ import {
   EVENT_LIST_SERVERS,
   EVENT_OPEN_SERVER_SETTINGS,
   EVENT_SET_SERVER,
-} from '../transmission/events';
+} from '../events';
 
 export default {
   onServerHealthChange(cb: (health: IServerHealth) => void) {
