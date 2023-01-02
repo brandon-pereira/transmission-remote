@@ -16,8 +16,6 @@ if (deeplink) {
   startPath = deeplink.replace('#', '/');
 }
 
-startPath = '/files/1';
-
 export default function App() {
   return (
     <Router initialEntries={[startPath]}>
