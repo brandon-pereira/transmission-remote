@@ -3,6 +3,7 @@ import {
   BrowserWindowConstructorOptions,
   BrowserWindow,
   shell,
+  nativeTheme,
 } from 'electron';
 import path from 'path';
 import { resolveHtmlPath } from './pathResolvers';
@@ -38,6 +39,7 @@ async function createWindow({ route, windowOpts }: CreateWindowOpts) {
       // devTools: false,
       preload: preloadPath,
     },
+    backgroundColor: nativeTheme.shouldUseDarkColors ? '#2e2c2c' : '#efefef',
     icon: getAssetPath('icon.png'),
     ...windowOpts,
   });
