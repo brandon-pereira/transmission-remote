@@ -8,11 +8,7 @@ function TorrentsList() {
 
   return (
     <div className={styles.container}>
-      {loading && (
-        <div className={styles.loading}>
-          <Loader />
-        </div>
-      )}
+      {loading && <Loader />}
       {error && (
         <div className={styles.error}>
           <span>🔌 ❌</span>

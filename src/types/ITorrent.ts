@@ -9,6 +9,12 @@ export enum TorrentStatus {
   'ISOLATED' = 7, // Torrent can't find peers
 }
 
+interface ITorrentFile {
+  title: string;
+  total: number;
+  downloaded: number;
+  wanted: boolean;
+}
 export interface ITorrent {
   id: string;
   // Title of the torrent
@@ -40,6 +46,8 @@ export interface ITorrent {
     download: number;
     upload: number;
   };
+  // torrent sub-file details
+  files: ITorrentFile[];
   // original, raw torrent
   __raw: Readonly<unknown>;
 }

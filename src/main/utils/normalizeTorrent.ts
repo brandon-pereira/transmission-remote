@@ -21,6 +21,17 @@ export default function normalizeTorrent(torrent: any): ITorrent {
     status: torrent.status,
     ratio: torrent.uploadRatio,
     isFinished: torrent.isFinished,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    files: torrent.files.map((file: any, idx: number) => {
+      const fileStats = torrent.fileStats[idx];
+      return {
+        title: file.name,
+        total: file.length,
+        downloaded: file.bytesCompleted,
+        wanted: fileStats.wanted,
+        priority: fileStats.priority,
+      };
+    }),
     sizeStats: {
       downloaded: torrent.downloadedEver,
       total: torrent.totalSize,
