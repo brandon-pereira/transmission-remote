@@ -17,7 +17,7 @@ const resourcePath = app.isPackaged
   : path.join(__dirname, '../../../assets');
 
 const preloadPath = app.isPackaged
-  ? path.join(__dirname, 'preload.js')
+  ? path.join(__dirname, 'preload/index.js')
   : path.join(__dirname, '../../../.erb/dll/preload.js');
 
 const getAssetPath = (...paths: string[]): string => {
