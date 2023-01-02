@@ -16,6 +16,7 @@ import {
   EVENT_SET_SESSION,
   EVENT_GET_TORRENT,
   EVENT_OPEN_TORRENT_SETTINGS,
+  EVENT_SET_SERVER,
 } from './transmission/events';
 
 const api = {
@@ -79,6 +80,9 @@ const api = {
         return ipcRenderer.invoke(EVENT_DELETE_TORRENTS, torrents);
       }
       return null;
+    },
+    setServer(serverId: string): Promise<void> {
+      return ipcRenderer.invoke(EVENT_SET_SERVER, serverId);
     },
     openFilePicker() {
       ipcRenderer.send(EVENT_OPEN_TORRENT_FILE_PICKER);

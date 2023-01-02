@@ -7,15 +7,17 @@ type Props = React.DetailedHTMLProps<
   HTMLButtonElement
 > & {
   icon?: React.ReactNode;
+  isLoading?: boolean;
   children?: string | React.ReactNode;
 };
 
-function Button({ icon, className, children, ...props }: Props) {
+function Button({ icon, className, isLoading, children, ...props }: Props) {
   return (
     <button
       className={classNames(
         styles.button,
         className,
+        isLoading && styles.loading,
         icon && !children && styles.iconButton
       )}
       {...props}

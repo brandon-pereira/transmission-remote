@@ -11,7 +11,7 @@ import ServerSettings from './pages/ServerSettings/ServerSettings';
 import MainWindow from './pages/MainWindow/MainWindow';
 import Files from './pages/Files/Files';
 
-let startPath = '/';
+let startPath = '/home';
 const deeplink = window.location.hash;
 if (deeplink) {
   startPath = deeplink.replace('#', '/');

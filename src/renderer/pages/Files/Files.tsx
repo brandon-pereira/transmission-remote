@@ -8,10 +8,10 @@ function Files() {
   const { torrent } = useTorrent(fileId);
 
   return (
-    <div>
+    <>
       <TitleBar title={torrent?.title} />
       <h2>Coming Soon 🚀</h2>
-    </div>
+    </>
   );
 }
 

@@ -1,5 +1,4 @@
 import { app, dialog, ipcMain } from 'electron';
-import Transmission from 'transmission-promise';
 import { readFile } from 'fs/promises';
 import { ITorrent } from 'types/ITorrent';
 import { IServer, IServerHealth } from 'types/IServer';
@@ -17,6 +16,7 @@ import {
   EVENT_OPEN_SERVER_SETTINGS,
   EVENT_OPEN_TORRENT_FILE_PICKER,
   EVENT_OPEN_TORRENT_SETTINGS,
+  EVENT_SET_SERVER,
   EVENT_SET_SESSION,
   EVENT_START_TORRENTS,
   EVENT_STOP_TORRENTS,
@@ -27,26 +27,12 @@ import getSettingsWindow, {
 } from '../windows/settingsWindow';
 import { createTorrentSettingsWindow } from '../windows/torrentSettingsWindow';
 import getMainWindow from '../windows/mainWindow';
+import servers from './servers';
 
-export type ServerConfiguration = {
-  host?: string;
-  port?: number;
-  username?: string;
-  password?: string;
-};
-
-let servers = store.get(STORE_REMOTES_SETTINGS);
-if (!servers || !servers.length) {
-  servers = [{ host: 'localhost', port: 9091 }];
-  store.set(STORE_REMOTES_SETTINGS, servers);
-}
-// eslint-disable-next-line no-console
-console.log('Connecting to Transmission with Settings:', servers[0]);
-let transmission = new Transmission(servers[0]);
-
-export async function addTorrentFromPath(filePath: string) {
+const transmission = () => servers.transmissionInstance;
+async function addTorrentFromPath(filePath: string) {
   const fileData = await readFile(filePath, { encoding: 'base64' });
-  transmission.addBase64(fileData);
+  transmission().addBase64(fileData);
 }
 
 ipcMain.on(EVENT_OPEN_TORRENT_FILE_PICKER, async () => {
@@ -63,7 +49,7 @@ app.setAsDefaultProtocolClient('magnet');
 
 // Magnet Link Handler
 app.on('open-url', (_event, url) => {
-  transmission.addUrl(url);
+  transmission().addUrl(url);
 });
 
 // File Double Click Handler
@@ -72,16 +58,20 @@ app.on('open-file', async (_event, filePath) => {
 });
 
 ipcMain.handle(EVENT_ADD_SERVER, async (_event, server: IServer) => {
-  const prev = store.get(STORE_REMOTES_SETTINGS);
-  const next = [server, ...prev];
-  const tempServer = new Transmission(server);
-  await tempServer.sessionStats();
-  store.set(STORE_REMOTES_SETTINGS, next);
-  transmission = tempServer;
+  await servers.addServer(server);
   const settingsWindow = getSettingsWindow();
   settingsWindow?.close();
   const mainWindow = getMainWindow();
   mainWindow?.focus();
+});
+
+ipcMain.handle(EVENT_SET_SERVER, async (_event, serverId: string) => {
+  await servers.setActiveServer(serverId);
+  const settingsWindow = getSettingsWindow();
+  settingsWindow?.close();
+  const mainWindow = getMainWindow();
+  mainWindow?.focus();
+  mainWindow?.reload();
 });
 
 ipcMain.handle(EVENT_LIST_SERVERS, async () => {
@@ -97,7 +87,7 @@ ipcMain.handle(EVENT_LIST_SERVERS, async () => {
 
 // Renderer Requests Torrents List
 ipcMain.handle(EVENT_LIST_TORRENTS, async () => {
-  const response = await transmission.all();
+  const response = await transmission().all();
   const torrents = response.torrents as ITorrent[];
   if (!torrents || !Array.isArray(torrents)) {
     return [];
@@ -107,7 +97,7 @@ ipcMain.handle(EVENT_LIST_TORRENTS, async () => {
 
 // Torrent Details
 ipcMain.handle(EVENT_GET_TORRENT, async (_event, id: string) => {
-  const response = await transmission.get([Number(id)]);
+  const response = await transmission().get([Number(id)]);
   const torrents = response.torrents as ITorrent[];
   if (!torrents || !Array.isArray(torrents) || !torrents.length) {
     throw new Error('Invalid Torrent Provided or Server Offline');
@@ -117,23 +107,23 @@ ipcMain.handle(EVENT_GET_TORRENT, async (_event, id: string) => {
 
 // Renderer Starts Torrents
 ipcMain.handle(EVENT_START_TORRENTS, async (_event, ids: string[]) => {
-  await transmission.start(ids);
+  await transmission().start(ids);
   if (ids.length === 1) {
     await Promise.race([
-      transmission.waitForState(ids[0], 'DOWNLOAD'),
-      transmission.waitForState(ids[0], 'SEED'),
+      transmission().waitForState(ids[0], 'DOWNLOAD'),
+      transmission().waitForState(ids[0], 'SEED'),
     ]);
   }
 });
 
 ipcMain.handle(EVENT_DELETE_TORRENTS, async (_event, ids: string[]) => {
-  return transmission.remove(ids, false);
+  return transmission().remove(ids, false);
 });
 
 // Renderer Stops Torrent
 ipcMain.handle(EVENT_STOP_TORRENTS, async (_event, ids: string[]) => {
-  await transmission.stop(ids);
-  await transmission.waitForState(ids[0], 'STOPPED');
+  await transmission().stop(ids);
+  await transmission().waitForState(ids[0], 'STOPPED');
 });
 
 // Renderer Stops Torrent
@@ -146,7 +136,7 @@ ipcMain.handle(
 
 // Renderer Toggles Speed Limit
 ipcMain.handle(EVENT_SET_SESSION, async (_event, session: Session) => {
-  transmission.session({
+  transmission().session({
     ...session,
   });
 });
@@ -154,7 +144,7 @@ ipcMain.handle(EVENT_SET_SESSION, async (_event, session: Session) => {
 // Renderer Toggles Speed Limit
 ipcMain.handle(EVENT_GET_SESSION, async () => {
   // @ts-expect-error this library has bad typings.. this is the getter
-  return transmission.session();
+  return transmission().session();
 });
 
 ipcMain.on(EVENT_OPEN_SERVER_SETTINGS, async () => {

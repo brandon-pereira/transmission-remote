@@ -8,6 +8,7 @@ export const EVENT_DELETE_TORRENTS = 'transmission-event-delete-torrents';
 export const EVENT_LIST_TORRENTS = 'transmission-event-list-torrents';
 export const EVENT_GET_TORRENT = 'transmission-event-get-torrent';
 export const EVENT_LIST_SERVERS = 'transmission-event-list-servers';
+export const EVENT_SET_SERVER = 'transmission-event-set-server';
 export const EVENT_ADD_SERVER = 'transmission-event-add-server';
 export const EVENT_GET_SESSION = 'transmission-event-get-session';
 export const EVENT_ADD_TORRENT_FROM_PATH =

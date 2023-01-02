@@ -4,14 +4,14 @@ export enum IServerHealth {
 }
 
 export interface IServerConfiguration {
-  host?: string;
-  port?: number;
+  id: string;
+  host: string;
+  port: number;
   username?: string;
   password?: string;
 }
 
 export interface IServer extends IServerConfiguration {
-  health: IServerHealth;
   isDefault: boolean;
   isActive: boolean;
 }

@@ -16,6 +16,11 @@
   }
 }
 
+.loading {
+  cursor: wait;
+  opacity: 0.8;
+}
+
 .iconButton {
   padding: 2px 8px;
   svg {

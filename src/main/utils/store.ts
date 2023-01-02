@@ -1,10 +1,10 @@
 import { ipcMain } from 'electron';
 
 import Store from 'electron-store';
-import type { ServerConfiguration } from '../transmission/transmission';
+import { IServerConfiguration } from 'types/IServer';
 
 type StoreTypes = {
-  'transmission-servers': ServerConfiguration[];
+  'transmission-servers': IServerConfiguration[];
 };
 
 const store = new Store<StoreTypes>();

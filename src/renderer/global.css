@@ -2,20 +2,22 @@
   --fonts-primary: 'Source Sans Pro', sans-serif;
   --colors-app-shell-background: linear-gradient(#fdfdfd, #dbdbdb);
   --colors-app-shell-color: #000;
-  --colors-core-background: #fff;
-  --colors-buttons-background: #fff;
+  --colors-core-background: #efefef;
+  --colors-buttons-background: #ecebeb;
   --colors-text-primary: #272727;
   --colors-text-secondary: #5a5a5a;
+  --colors-divider: #dddcdc;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     --colors-app-shell-background: linear-gradient(#45464a, #343538);
     --colors-app-shell-color: #bfc0c3;
-    --colors-core-background: #202225;
-    --colors-buttons-background: #67686b;
+    --colors-core-background: #2e2c2c;
+    --colors-buttons-background: #312f2f;
     --colors-text-primary: #dedfdf;
     --colors-text-secondary: #9a9b9d;
+    --colors-divider: #504f4f;
   }
 }
 
@@ -31,4 +33,7 @@ body {
 
 #root {
   height: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
