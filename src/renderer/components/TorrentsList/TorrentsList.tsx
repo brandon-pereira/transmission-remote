@@ -1,4 +1,6 @@
 import useTorrents from 'renderer/hooks/useTorrents';
+import Button from '../Button/Button';
+import ServerIcon from '../Icons/ServerIcon';
 import Loader from '../Loader/Loader';
 import Torrent from '../Torrent/Torrent';
 import styles from './TorrentList.module.scss';
@@ -14,6 +16,16 @@ function TorrentsList() {
           <span>🔌 ❌</span>
           <h3>Unable to connect to server</h3>
           <p>Please verify your server is running and try again.</p>
+          <Button
+            onClick={() => {
+              window.electron.servers.openServerSettings();
+            }}
+            type="button"
+            style={{ margin: '2rem 0' }}
+            icon={<ServerIcon />}
+          >
+            Connect to Another Server
+          </Button>
         </div>
       )}
       {torrents?.map((t) => (

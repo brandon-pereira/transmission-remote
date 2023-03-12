@@ -25,6 +25,9 @@ function ServerSettings() {
     // eslint-disable-next-line no-console
     console.log('final data', data);
     try {
+      if (data.host.includes(':')) {
+        throw new Error("Please don't include port in the hostname");
+      }
       setConnecting(true);
       await window.electron.servers.addServer(data);
       setConnecting(false);
