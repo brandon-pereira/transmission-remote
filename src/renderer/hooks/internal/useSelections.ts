@@ -2,20 +2,20 @@ import { MouseEvent, useState } from 'react';
 
 // On cmdClick on mac and cntrl click on windows
 // select additional item or unselect if already selected
-const onMetaClick = (newId: string) => (currentIds: string[]) => {
+const onMetaClick = (newId: number) => (currentIds: number[]) => {
   if (!currentIds.includes(newId)) {
     return [...currentIds, newId];
   }
   return currentIds.filter((idx) => idx !== newId);
 };
 
-const onRegularClick = (newId: string) => () => {
+const onRegularClick = (newId: number) => () => {
   return [newId];
 };
 
 const onShiftClick =
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  (_newId: string, _order: string[]) => (currentIds: string[]) => {
+  (_newId: number, _order: number[]) => (currentIds: number[]) => {
     return currentIds;
   };
 
@@ -23,12 +23,12 @@ function useSelections({
   data,
   initialItems,
 }: {
-  data: string[];
-  initialItems?: string[];
+  data: number[];
+  initialItems?: number[];
 }) {
-  const [selections, setSelections] = useState<string[]>(initialItems || []);
+  const [selections, setSelections] = useState<number[]>(initialItems || []);
 
-  const onSelectItem = (e: MouseEvent<HTMLElement>, id: string) => {
+  const onSelectItem = (e: MouseEvent<HTMLElement>, id: number) => {
     if (e.metaKey) {
       setSelections(onMetaClick(id));
     } else if (e.shiftKey) {

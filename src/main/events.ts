@@ -15,4 +15,5 @@ export const EVENT_ADD_TORRENT_FROM_PATH =
   'transmission-event-add-torrent-from-path';
 export const EVENT_OPEN_SERVER_SETTINGS = 'EVENT_OPEN_SERVER_SETTINGS';
 export const EVENT_OPEN_TORRENT_SETTINGS = 'EVENT_OPEN_TORRENT_SETTINGS';
+export const EVENT_SET_TORRENT_SETTINGS = 'EVENT_SET_TORRENT_SETTINGS';
 export const EVENT_SET_SESSION = 'transmission-event-set-session';

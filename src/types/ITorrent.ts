@@ -10,13 +10,14 @@ export enum TorrentStatus {
 }
 
 interface ITorrentFile {
+  id: number;
   title: string;
   total: number;
   downloaded: number;
   wanted: boolean;
 }
 export interface ITorrent {
-  id: string;
+  id: number;
   // Title of the torrent
   title: string;
   // eta from epoch till completion

@@ -1,22 +1,22 @@
 import useSWR from 'swr';
 
-const fetcher = (id: string) => {
+const fetcher = (id: number) => {
   return window.electron.transmission.getTorrent(id);
 };
 
-function useTorrent(id?: string) {
+function useTorrent(id?: number) {
   const {
     data: torrent,
     mutate,
     error,
-  } = useSWR(id, fetcher, {
+  } = useSWR(`${id}`, fetcher, {
     refreshInterval: 2000,
   });
 
   return {
     torrent,
     error,
-    refetch: mutate,
+    mutate,
     loading: !torrent && !error,
   };
 }

@@ -12,6 +12,7 @@ import {
   EVENT_OPEN_TORRENT_FILE_PICKER,
   EVENT_OPEN_TORRENT_SETTINGS,
   EVENT_SET_SESSION,
+  EVENT_SET_TORRENT_SETTINGS,
   EVENT_START_TORRENTS,
   EVENT_STOP_TORRENTS,
 } from '../events';
@@ -111,3 +112,14 @@ ipcMain.handle(EVENT_GET_SESSION, async () => {
 ipcMain.on(EVENT_OPEN_TORRENT_SETTINGS, async (_event, id: string) => {
   return createTorrentSettingsWindow(id);
 });
+
+ipcMain.handle(
+  EVENT_SET_TORRENT_SETTINGS,
+  async (_event, id: number, options: Record<string, unknown>) => {
+    // eslint-disable-next-line no-console
+    console.info({ id, options });
+    return transmission().set(id, {
+      ...options,
+    });
+  }
+);

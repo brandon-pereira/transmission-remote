@@ -4,12 +4,14 @@ import Loader from 'renderer/components/Loader/Loader';
 import useTorrent from 'renderer/hooks/useTorrent';
 import Section from 'renderer/components/Section/Section';
 import SectionListItem from 'renderer/components/Section/SectionListItem';
+import useTorrentMutation from 'renderer/hooks/useTorrentMutation';
 import styles from './TorrentSettings.module.scss';
 
 function TorrentSettings() {
-  const { torrentId } = useParams();
-
+  const { torrentId: rawTorrentId } = useParams();
+  const torrentId = Number(rawTorrentId);
   const { torrent, error, loading } = useTorrent(torrentId);
+  const editTorrent = useTorrentMutation(torrentId);
 
   if (loading) {
     return (
@@ -44,7 +46,19 @@ function TorrentSettings() {
               rightContent={
                 <>
                   {'[<][.][>]'}
-                  <input type="checkbox" checked={file.wanted} readOnly />
+                  <input
+                    type="checkbox"
+                    checked={file.wanted}
+                    onChange={(e) => {
+                      let key = 'files-unwanted';
+                      if (e.currentTarget.checked) {
+                        key = 'files-wanted';
+                      }
+                      editTorrent({
+                        [key]: [file.id],
+                      });
+                    }}
+                  />
                 </>
               }
             />

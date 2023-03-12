@@ -25,6 +25,7 @@ export default function normalizeTorrent(torrent: any): ITorrent {
     files: torrent.files.map((file: any, idx: number) => {
       const fileStats = torrent.fileStats[idx];
       return {
+        id: idx,
         title: file.name.replace(torrent.name, ''),
         total: file.length,
         downloaded: file.bytesCompleted,
