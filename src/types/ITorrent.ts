@@ -15,6 +15,7 @@ interface ITorrentFile {
   total: number;
   downloaded: number;
   wanted: boolean;
+  priority: number;
 }
 export interface ITorrent {
   id: number;

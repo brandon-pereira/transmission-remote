@@ -1,0 +1,35 @@
+.rightContent {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.priorityContainer {
+  border-radius: 16px;
+  color: #000;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.priority {
+  width: 2rem;
+  padding: 0;
+  height: 1rem;
+  display: flex;
+  align-items: center;
+
+  justify-content: center;
+  border: none;
+  background: #eee;
+  &:first-of-type {
+    border-radius: 16px 0 0 16px;
+  }
+  &:last-of-type {
+    border-radius: 0 16px 16px 0;
+  }
+  &.active {
+    background: #0078d4;
+    color: #fff;
+  }
+}
