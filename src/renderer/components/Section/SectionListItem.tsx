@@ -2,7 +2,7 @@ import styles from './Section.module.scss';
 
 interface Props {
   title: string;
-  description?: string;
+  description?: string | number;
   rightContent?: React.ReactNode;
 }
 

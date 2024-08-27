@@ -1,9 +1,9 @@
 import Loader from 'renderer/components/Loader/Loader';
 import Section from 'renderer/components/Section/Section';
 import useTorrent from 'renderer/hooks/useTorrent';
-import styles from './TransferStats.module.scss';
 import SectionListItem from 'renderer/components/Section/SectionListItem';
 import { getTorrentTertiaryTitle } from 'renderer/utils/torrents';
+// import styles from './TransferStats.module.scss';
 
 export default function TorrentStats({ torrentId }: { torrentId: number }) {
   const { torrent } = useTorrent(torrentId);
@@ -36,7 +36,7 @@ export default function TorrentStats({ torrentId }: { torrentId: number }) {
         description={torrent.sizeStats.uploaded}
       />
       <SectionListItem title="Ratio" description={torrent.ratio} />
-      <div className={styles.TransferStatsGrid}></div>
+      {/* <div className={styles.TransferStatsGrid}></div> */}
     </Section>
   );
 }
